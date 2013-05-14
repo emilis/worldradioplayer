@@ -1,0 +1,38 @@
+#player {
+    padding:            1rem;
+    border-bottom:      0.2rem solid @gray;
+    background-color:   @charcoal;
+}
+
+#explorer {
+
+    > .station-list {
+        .nolist();
+
+        > .station {
+            padding:        1rem;
+            height:         4rem;
+            overflow:       hidden;
+            border-bottom:  0.1rem solid @charcoal;
+
+            > .info {
+                float:      left;
+                width:      calc(100%-20rem);
+                > .name {
+                    display:        block;
+                    font-weight:    bold;
+                }
+                > .description {
+                    font-weight:    normal;
+                    font-size:      1.2rem;
+                }
+            }
+
+            > .buttons {
+                float:      right;
+                text-align: right;
+            }
+        }
+    }
+}
+

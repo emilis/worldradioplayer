@@ -1,0 +1,4 @@
+*.swp
+application.zip
+static/js/stations.json
+static/js/stations.js

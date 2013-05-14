@@ -1,0 +1,22 @@
+-   name:           Chillstep.info
+    description:    The Chillstep Internet Radio
+    url:            http://chillstep.info/
+    streams:
+        -   type:   ogg
+            url:    http://chillstep.info:1984/listen.ogg
+-   name:           Radio Paradise
+    description:    "DJ-mixed modern & classic rock, world, electronica & more"
+    url:            http://www.radioparadise.com/
+    streams:
+        -   type:   ogg
+            url:    http://stream-uk1.radioparadise.com:80/rp_96m.ogg
+        -   type:   ogg
+            url:    http://stream-tx1.radioparadise.com:80/rp_96.ogg
+        -   type:   ogg
+            url:    http://stream-tx4.radioparadise.com:80/rp_96.ogg
+-   name:           Revolution Radio
+    url:            http://revolutionradio.ru/
+    streams:
+        -   type:   ogg
+            url:    http://revolutionradio.ru/live.ogg
+

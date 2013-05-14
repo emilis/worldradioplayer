@@ -1,0 +1,28 @@
+{
+    "name":             "WorldRadio",
+    "description":      "Internet radio player.",
+    "version":          "0.0.1",
+    "type":             "web",
+    "launch_path":      "/index.html",
+    "icons": {
+        "128":          "/static/img/icons/128.png",
+        "256":          "/static/img/icons/256.png"
+    },
+    "orientation":      "portrait-primary",
+    "developer": {
+        "name":         "Emilis Dambauskas",
+        "url":          "http://emilis.github.io/",
+        "email":        "emilis.d@gmail.com"
+    },
+    "default_locale":   "en-US",
+    "locales": {
+        "en": {
+            "name":         "WorldRadio",
+            "description":  "Internet radio player."
+        },
+        "lt": {
+            "name":         "WorldRadio",
+            "description":  "Interneto radijo grotuvas."
+        }
+    }
+}

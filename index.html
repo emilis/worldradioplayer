@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WorldRadio</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=320">
+        <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+        <script src="/static/js/scripts.js"></script>
+    </head>
+    <body role="app">
+
+        <div id="player">
+            <p><span class="state">Stopped.</span> <span class="song-name"></span></p>
+            <p>
+                <button class="play disabled">Play</button>
+                <button class="stop">Stop</button>
+            </p>
+        </div>
+
+        <div id="explorer">
+            <p>Loading stations...</p>
+        </div>
+
+        <script id="station-list" type="text/html">
+            <ul class="station-list"></ul>
+        </script>
+
+        <script id="station-view" type="text/html">
+            <li class="station">
+                <div class="info">
+                    <span class="name"></span>
+                    <span class="description"></span>
+                </div>
+                <div class="buttons">
+                    <button class="play">Play</button>
+                </div>
+            </li>
+        </script>
+
+    </body>
+</html>
