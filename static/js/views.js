@@ -43,7 +43,7 @@
         $player.find( ".play" ).removeClass( "disabled" ).html( LABEL_PAUSE );
         if ( station ) {
             $player.find( ".song-name" ).html( station.name );
-            station.$view.find( ".play" ).html( LABEL_PAUSE );
+            station.$view.addClass( "playing" ).find( ".play" ).html( LABEL_PAUSE );
         }
     };
 
@@ -87,11 +87,11 @@
 
         function toggle() {
             if ( station.playing ) {
-                station.$view.find( ".play" ).html( LABEL_PLAY );
+                station.$view.removeClass( "playing" ).find( ".play" ).html( LABEL_PLAY );
                 pausePlayer();
                 App.Player.pause();
             } else {
-                station.$view.find( ".play" ).html( LABEL_PAUSE );
+                station.$view.addClass( "playing" ).find( ".play" ).html( LABEL_PAUSE );
                 playStation( station );
                 App.Player.playStation( station );
             }
