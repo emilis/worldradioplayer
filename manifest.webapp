@@ -1,5 +1,5 @@
 {
-    "name":             "WorldRadio",
+    "name":             "World Radio Player",
     "description":      "Internet radio player.",
     "version":          "0.0.1",
     "type":             "web",
@@ -17,11 +17,11 @@
     "default_locale":   "en-US",
     "locales": {
         "en": {
-            "name":         "WorldRadio",
+            "name":         "World Radio Player",
             "description":  "Internet radio player."
         },
         "lt": {
-            "name":         "WorldRadio",
+            "name":         "World Radio Player",
             "description":  "Interneto radijo grotuvas."
         }
     }

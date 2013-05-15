@@ -6,9 +6,9 @@ YAML2JSON=python -c "import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys
 
 ### Main -----------------------------------------------------------------------
 
-default: static
+default: static icons
 
-zip: application.zip
+zip: application.zip icons
 
 application.zip: \
 static \
@@ -16,6 +16,9 @@ index.html \
 manifest.webapp \
 Makefile
 	zip -r application.zip static/ index.html manifest.webapp
+
+icons:
+	$(MAKE) -C static/img/icons/ > /dev/null
 
 static: \
 static/css/style.css \
