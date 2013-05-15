@@ -12,8 +12,8 @@
         <div id="player">
             <p><span class="state">Stopped.</span> <span class="song-name"></span></p>
             <p>
-                <button class="play disabled">Play</button>
-                <button class="stop">Stop</button>
+                <button class="play disabled"><i class="icon-play"></i></button>
+                <button class="stop disabled"><i class="icon-stop"></i></button>
             </p>
         </div>
 
@@ -27,12 +27,12 @@
 
         <script id="station-view" type="text/html">
             <li class="station">
+                <div class="buttons">
+                    <button class="play"><i class="icon-play"></i></button>
+                </div>
                 <div class="info">
                     <span class="name"></span>
                     <span class="description"></span>
-                </div>
-                <div class="buttons">
-                    <button class="play">Play</button>
                 </div>
             </li>
         </script>

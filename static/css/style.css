@@ -1,9 +1,10 @@
+@import "../fonts/awesome/font-awesome.css";
 @import "responsive.css";
 body{margin:0;padding:0;background-color:#000000;color:#eaeff2;font-family:Roboto,Helvetica,Arial,sans-serif;font-size:10px;}
 div,p,button,th,td{font-size:1.6rem;}
 button{padding:1rem;color:#000000;}button.disabled{color:#909498;}
 #player{padding:1rem;border-bottom:0.2rem solid #909498;background-color:#4d4e53;}
 #explorer>.station-list{list-style:none;display:block;padding:0;margin:0;}#explorer>.station-list>li{list-style:none;display:block;padding:0;margin:0;}
-#explorer>.station-list>.station{padding:1rem;height:4rem;overflow:hidden;border-bottom:0.1rem solid #4d4e53;}#explorer>.station-list>.station>.info{float:left;width:calc(80%);}#explorer>.station-list>.station>.info>.name{display:block;font-weight:bold;}
-#explorer>.station-list>.station>.info>.description{font-weight:normal;font-size:1.2rem;}
-#explorer>.station-list>.station>.buttons{float:right;text-align:right;}
+#explorer>.station-list>.station{padding:1rem;min-height:4rem;overflow:hidden;border-bottom:0.1rem solid #4d4e53;}#explorer>.station-list>.station>.buttons{float:right;text-align:right;}
+#explorer>.station-list>.station>.info{margin:0 10rem 0 0;}#explorer>.station-list>.station>.info>.name{display:block;font-weight:bold;}
+#explorer>.station-list>.station>.info>.description{font-weight:normal;font-size:1.2rem;color:#909498;}

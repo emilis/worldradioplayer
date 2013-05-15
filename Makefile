@@ -28,6 +28,7 @@ static/js/scripts.js
 static/css/style.css: \
 static/css/style.less \
 static/css/vars.less \
+static/fonts/awesome/font-awesome.css \
 static/css/base.less \
 static/css/player.less \
 static/css/responsive.css

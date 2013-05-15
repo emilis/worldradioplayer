@@ -3783,9 +3783,9 @@ window.App = {};
 
     /// Constants: -------------------------------------------------------------
 
-    var LABEL_PLAY =    "Play";
-    var LABEL_PAUSE =   "Pause";
-    var LABEL_STOP =    "Stop";
+    var LABEL_PLAY =    '<i class="icon-play"></i>';
+    var LABEL_PAUSE =   '<i class="icon-pause"></i>';
+    var LABEL_STOP =    '<i class="icon-stop"></i>';
 
     /// Vars: ------------------------------------------------------------------
 
