@@ -1,4 +1,4 @@
-.PHONY:	default static
+.PHONY:	default static zip
 
 ### Vars -----------------------------------------------------------------------
 
@@ -6,24 +6,28 @@ YAML2JSON=python -c "import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys
 
 ### Main -----------------------------------------------------------------------
 
-default: static icons
+default: static
 
-zip: application.zip icons
+zip: application.zip
 
 application.zip: \
-static \
+default \
 index.html \
 manifest.webapp \
 Makefile
 	zip -r application.zip static/ index.html manifest.webapp
 
-icons:
-	$(MAKE) -C static/img/icons/ > /dev/null
+### Static files: --------------------------------------------------------------
 
 static: \
 static/css/style.css \
-static/js/scripts.js
+static/js/scripts.js \
+icons
 
+icons:
+	$(MAKE) -C static/img/icons/ > /dev/null
+
+### CSS: -----------------------------------------------------------------------
 
 static/css/style.css: \
 static/css/style.less \
@@ -33,6 +37,8 @@ static/css/base.less \
 static/css/player.less \
 static/css/responsive.css
 	lessc -x static/css/style.less $@
+
+### JS: ------------------------------------------------------------------------
 
 static/js/stations.json:\
 static/js/stations.yml
@@ -45,9 +51,9 @@ static/js/stations.json
 	echo ";" >> $@
 
 static/js/scripts.js: \
-static/js/underscore.js \
-static/js/zepto.js \
-static/js/buzz.js \
+static/js/lib/underscore.js \
+static/js/lib/zepto.js \
+static/js/lib/buzz.js \
 static/js/app.js \
 static/js/stations.js \
 static/js/player.js \
