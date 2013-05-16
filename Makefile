@@ -54,9 +54,10 @@ static/js/lib/zepto.js \
 static/js/lib/buzz.js \
 static/js/app.js \
 static/js/stations.js \
+static/js/sound-player.js \
 static/js/player.js \
-static/js/views.js \
-static/js/main.js
+static/js/station-list.js \
+static/js/explorer.js
 	cat $^ > "$@"
 
 

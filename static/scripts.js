@@ -3640,7 +3640,86 @@ var buzz = {
         return  Math.round( ( ( total / 100 ) * percent ) * r ) / r;
     }
 };
-window.App = {};
+;(function( window, _ ){
+
+    /// Constants: -------------------------------------------------------------
+
+    var DEBUG = true;
+
+    var LABEL_PLAY =    '<i class="icon-play"></i>';
+    var LABEL_PAUSE =   '<i class="icon-pause"></i>';
+    var LABEL_STOP =    '<i class="icon-stop"></i>';
+
+
+    /// Exports: ---------------------------------------------------------------
+    
+    /**
+     *  Export main app namespace:
+     */
+    var App = window.App = {
+        debug:          debug,
+        LABEL_PLAY:     LABEL_PLAY,
+        LABEL_PAUSE:    LABEL_PAUSE,
+        LABEL_STOP:     LABEL_STOP,
+        AppController: {
+            playStation:    playStation,
+            pauseStation:   pauseStation,
+            stop:           stop,
+        },
+    };
+
+    /// Init: ------------------------------------------------------------------
+
+    $( init );
+
+    /// Functions: -------------------------------------------------------------
+
+    function init() {
+
+        /// Currently we do nothing.
+        /// The widtgets init themselves.
+    };
+
+    function playStation( station ) {
+
+        var pstation = App.SoundPlayer.getCurrentStation();
+        App.SoundPlayer.playStation( station );
+        App.Player.showStation( station );
+        pstation && App.StationList.updateStation( pstation );
+        App.StationList.updateStation( station );
+    };
+
+    function pauseStation( station ) {
+
+        var cstation = App.SoundPlayer.getCurrentStation();
+        if ( !_.isEqual( station, cstation )) {
+            throw Error( "Trying to pause a station that is not currently playing." );
+        }
+        App.SoundPlayer.pause();
+        App.Player.update();
+        App.StationList.updateStation( station );
+    };
+
+    function stop() {
+
+        var station = App.SoundPlayer.getCurrentStation();
+        App.SoundPlayer.stop();
+        App.Player.update();
+        App.StationList.updateStation( station );
+    };
+
+    /// Utilities: -------------------------------------------------------------
+
+    function debug() {
+
+        if ( DEBUG ) {
+            var args = Array.prototype.slice.call( arguments );
+            args.unshift( "WorldRadioPlayer" );
+            console.log.apply( console, arguments );
+        }
+    };
+
+})( window, window._ );
 ;App.Stations=
 [
     {
@@ -3684,7 +3763,7 @@ window.App = {};
         "name": "Revolution Radio"
     }
 ];
-;(function( _, App ){
+;(function( _, buzz, App ){
 
     /// Constants: -------------------------------------------------------------
 
@@ -3699,7 +3778,8 @@ window.App = {};
 
     /// Exports: ---------------------------------------------------------------
 
-    App.Player = {
+    App.SoundPlayer = {
+        getCurrentStation:  getCurrentStation,
         playStation:        playStation,
         play:               play,
         stop:               stop,
@@ -3711,8 +3791,13 @@ window.App = {};
 
     /// Functions: -------------------------------------------------------------
 
+    function getCurrentStation() {
+
+        return currentStation;
+    };
+
     function playStation( station ) {
-        console.log( "Player", "playStation", JSON.stringify( station ));
+        App.debug( "Player", "playStation", JSON.stringify( station ));
 
         currentStation && currentStation.playing && stop();
 
@@ -3725,13 +3810,13 @@ window.App = {};
     };
 
     function play() {
-        console.log( "Player", "play" );
+        App.debug( "Player", "play" );
 
         playStation();
     };
 
     function stop() {
-        console.log( "Player", "stop" );
+        App.debug( "Player", "stop" );
 
         currentStation.sound.stop();
         currentStation.playing = false;
@@ -3739,7 +3824,7 @@ window.App = {};
     };
 
     function pause() {
-        console.log( "Player", "pause" );
+        App.debug( "Player", "pause" );
 
         currentStation.sound.fadeOut().pause();
         currentStation.playing = false;
@@ -3778,27 +3863,22 @@ window.App = {};
         return _.some( station.streams, isStreamSupported );
     };
 
-})( window._, window.App );
+})( window._, window.buzz, window.App );
 ;(function( _, $, App ){
 
-    /// Constants: -------------------------------------------------------------
-
-    var LABEL_PLAY =    '<i class="icon-play"></i>';
-    var LABEL_PAUSE =   '<i class="icon-pause"></i>';
-    var LABEL_STOP =    '<i class="icon-stop"></i>';
-
-    /// Vars: ------------------------------------------------------------------
+    /// Variables: -------------------------------------------------------------
 
     var $player;
-    var $explorer;
-    var $stations;
+    var $state;
+    var $song_name;
+    var $play;
+    var $stop;
 
     /// Exports: ---------------------------------------------------------------
 
-    App.Views = {
-        playStation:    playStation,
-        showStations:   showStations,
-        getStationView: getStationView,
+    App.Player = {
+        update:         update,
+        showStation:    showStation,
     };
 
     /// Init: ------------------------------------------------------------------
@@ -3809,55 +3889,120 @@ window.App = {};
 
     function init() {
 
-        $player =   $( "#player" );
-        $explorer = $( "#explorer" );
-        $stations = $( $( "#station-list" ).html() );
+        $player =       $( "#player" );
+        $state =        $player.find( ".state" );
+        $song_name =    $player.find( ".song-name" );
+        $play =         $player.find( ".play" );
+        $stop =         $player.find( ".stop" );
 
-        $player.on( "click", ".play", App.Player.play );
-        $player.on( "click", ".stop", App.Player.stop );
+        $play.on( "click", togglePlay );
+        $stop.on( "click", stop );
+        
+        update();
     };
 
+    function update() {
 
-    function playStation( station ) {
+        showStation( App.SoundPlayer.getCurrentStation() );
+    };
 
-        $player.find( ".state" ).html( "Playing:" );
-        $player.find( ".play" ).removeClass( "disabled" ).html( LABEL_PAUSE );
-        if ( station ) {
-            $player.find( ".song-name" ).html( station.name );
-            station.$view.addClass( "playing" ).find( ".play" ).html( LABEL_PAUSE );
+    function togglePlay() {
+
+        if ( !$play.hasClass( "disabled" )) {
+            var station = App.SoundPlayer.getCurrentStation();
+            if ( station ) {
+                if ( station.playing ) {
+                    App.AppController.pauseStation( station );
+                } else {
+                    App.AppController.playStation( station );
+                }
+            } else {
+                showStation();
+            }
         }
     };
 
-    function stopPlayer() {
-    
-        $player.find( ".state" ).html( "Stopped." );
-        $player.find( ".play" ).addClass( "disabled" ).html( LABEL_PLAY );
-        $player.find( ".song-name" ).html( "" );
+    function stop() {
+
+        if ( !$stop.hasClass( "disabled" )) {
+            App.AppController.stop();
+        }
     };
 
-    function pausePlayer() {
-        
-        $player.find( ".state" ).html( "Paused." );
+    function showStation( station ) {
+
+        if ( !station ) {
+            $state.html( "Stopped." );
+            $song_name.html( "" );
+            $play.addClass( "disabled" ).html( App.LABEL_PLAY );
+            $stop.addClass( "disabled" );
+        } else {
+            $song_name.html( station.name );
+            $play.removeClass( "disabled" );
+            $stop.removeClass( "disabled" );
+            if ( station.playing ) {
+                $state.html( "Playing:" );
+                $play.html( App.LABEL_PAUSE );
+            } else {
+                $state.html( "Paused:" );
+                $play.html( App.LABEL_PLAY );
+            }
+        }
     };
 
+})( window._, window.$, window.App );
+;(function( _, $, App ){
+
+    /// Variables: -------------------------------------------------------------
+
+    var $list;
+    var station_tpl;
+
+    /// Exports: ---------------------------------------------------------------
+
+    App.StationList = {
+        getView:        getView,
+        getStationView: getStationView,
+        showStations:   showStations,
+        updateStation:  updateStation,
+    };
+
+    /// Init: ------------------------------------------------------------------
+
+    $( init );
+
+    /// Functions: -------------------------------------------------------------
+
+    function init() {
+
+        $list =         $( document.getElementById( "station-list" ).innerHTML );
+        station_tpl =   document.getElementById( "station-view" ).innerHTML;
+
+        showStations( App.Stations );
+    };
+
+    function getView() {
+
+        return $list;
+    };
 
     function showStations( stations ) {
 
-        $stations.html( "" );
+        $list.html( "" );
         _.forEach( stations, addStation );
-        $explorer.html( "" );
-        $explorer.append( $stations );
 
         function addStation( station ){
-            $stations.append( getStationView( station ));
+            $list.append( getStationView( station ));
         };
     };
-
 
     function getStationView( station ) {
 
         if ( !station.$view ) {
-            var $view = station.$view = $( $( "#station-view" ).html() );
+            var $view = station.$view = $( station_tpl );
+            if ( !App.SoundPlayer.isStationSupported( station )) {
+                $view.addClass( "unsupported" );
+            }
             $view.find( ".name" ).html( station.name );
             $view.find( ".description" ).html( station.description );
             $view.on( "click", ".play", toggle );
@@ -3868,19 +4013,34 @@ window.App = {};
 
         function toggle() {
             if ( station.playing ) {
-                station.$view.removeClass( "playing" ).find( ".play" ).html( LABEL_PLAY );
-                pausePlayer();
-                App.Player.pause();
+                App.AppController.pauseStation( station );
             } else {
-                station.$view.addClass( "playing" ).find( ".play" ).html( LABEL_PAUSE );
-                playStation( station );
-                App.Player.playStation( station );
+                App.AppController.playStation( station );
             }
         }
     };
 
+    function updateStation( station ) {
+
+        if ( station.playing ) {
+            station.$view.addClass( "playing" ).find( ".play" ).html( App.LABEL_PAUSE );
+        } else {
+            station.$view.removeClass( "playing" ).find( ".play" ).html( App.LABEL_PLAY );
+        }
+    };
+
 })( window._, window.$, window.App );
-;(function( _, App ){
+;(function( _, $, App ){
+
+    /// Variables: -------------------------------------------------------------
+
+    var $explorer;
+
+    /// Exports: ---------------------------------------------------------------
+
+    App.Explorer = {
+        show:   show,
+    };
 
     /// Init: ------------------------------------------------------------------
 
@@ -3890,9 +4050,14 @@ window.App = {};
 
     function init() {
 
-        var stations = _.filter( App.Stations, App.Player.isStationSupported );
-        console.log( "filtered stations", JSON.stringify( stations ));
-        App.Views.showStations( stations );
+        $explorer = $( "#explorer" );
+        show( App.StationList.getView() );
     };
 
-})( window._, window.App );
+
+    function show( $view ) {
+
+        $explorer.html( "" ).append( $view );
+    };
+
+})( window._, window.$, window.App );

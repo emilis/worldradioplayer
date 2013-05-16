@@ -1,95 +1,87 @@
-;(function( _, App ){
-
-    /// Constants: -------------------------------------------------------------
-
-    var SOUND_OPT = {
-        autoplay:   false,
-        loop:       false,
-    };
+;(function( _, $, App ){
 
     /// Variables: -------------------------------------------------------------
 
-    var currentStation;
+    var $player;
+    var $state;
+    var $song_name;
+    var $play;
+    var $stop;
 
     /// Exports: ---------------------------------------------------------------
 
     App.Player = {
-        playStation:        playStation,
-        play:               play,
-        stop:               stop,
-        pause:              pause,
-        getSound:           getSound,
-        isStreamSupported:  isStreamSupported,
-        isStationSupported: isStationSupported,
+        update:         update,
+        showStation:    showStation,
     };
+
+    /// Init: ------------------------------------------------------------------
+
+    $( init );
 
     /// Functions: -------------------------------------------------------------
 
-    function playStation( station ) {
-        console.log( "Player", "playStation", JSON.stringify( station ));
+    function init() {
 
-        currentStation && currentStation.playing && stop();
+        $player =       $( "#player" );
+        $state =        $player.find( ".state" );
+        $song_name =    $player.find( ".song-name" );
+        $play =         $player.find( ".play" );
+        $stop =         $player.find( ".stop" );
 
-        currentStation = station || currentStation;
-        currentStation.sound = currentStation.sound || getSound( currentStation );
-        if ( currentStation.sound ) {
-            currentStation.sound.load().play();
-            currentStation.playing = true;
-        }
+        $play.on( "click", togglePlay );
+        $stop.on( "click", stop );
+        
+        update();
     };
 
-    function play() {
-        console.log( "Player", "play" );
+    function update() {
 
-        playStation();
+        showStation( App.SoundPlayer.getCurrentStation() );
+    };
+
+    function togglePlay() {
+
+        if ( !$play.hasClass( "disabled" )) {
+            var station = App.SoundPlayer.getCurrentStation();
+            if ( station ) {
+                if ( station.playing ) {
+                    App.AppController.pauseStation( station );
+                } else {
+                    App.AppController.playStation( station );
+                }
+            } else {
+                showStation();
+            }
+        }
     };
 
     function stop() {
-        console.log( "Player", "stop" );
 
-        currentStation.sound.stop();
-        currentStation.playing = false;
-        currentStation = null;
-    };
-
-    function pause() {
-        console.log( "Player", "pause" );
-
-        currentStation.sound.fadeOut().pause();
-        currentStation.playing = false;
-    };
-
-    function getSound( station ) {
-
-        var streams = _.filter( station.streams, isStreamSupported );
-        if ( streams && streams.length ) {
-            return new buzz.sound( streams[0].url, SOUND_OPT );
+        if ( !$stop.hasClass( "disabled" )) {
+            App.AppController.stop();
         }
     };
 
-    function isStreamSupported( stream ) {
+    function showStation( station ) {
 
-        switch ( stream.type ) {
-            case "ogg":
-                return buzz.isOGGSupported();
-                break;
-            case "wav":
-                return buzz.isWAVSupported();
-                break;
-            case "mp3":
-                return buzz.isMP3Supported();
-                break;
-            case "aac":
-                return buzz.isAACSupported();
-                break;
-            default:
-                return false;
+        if ( !station ) {
+            $state.html( "Stopped." );
+            $song_name.html( "" );
+            $play.addClass( "disabled" ).html( App.LABEL_PLAY );
+            $stop.addClass( "disabled" );
+        } else {
+            $song_name.html( station.name );
+            $play.removeClass( "disabled" );
+            $stop.removeClass( "disabled" );
+            if ( station.playing ) {
+                $state.html( "Playing:" );
+                $play.html( App.LABEL_PAUSE );
+            } else {
+                $state.html( "Paused:" );
+                $play.html( App.LABEL_PLAY );
+            }
         }
     };
 
-    function isStationSupported( station ) {
-
-        return _.some( station.streams, isStreamSupported );
-    };
-
-})( window._, window.App );
+})( window._, window.$, window.App );
