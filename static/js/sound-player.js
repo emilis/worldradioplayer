@@ -75,6 +75,13 @@
 
     function isStreamSupported( stream ) {
 
+        var supported = {
+            "ogg":  true,
+            "wav":  true,
+        }
+
+        return !! supported[ stream.type ];
+        /*
         switch ( stream.type ) {
             case "ogg":
                 return buzz.isOGGSupported();
@@ -91,6 +98,7 @@
             default:
                 return false;
         }
+        */
     };
 
     function isStationSupported( station ) {
