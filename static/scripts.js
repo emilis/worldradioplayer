@@ -3723,6 +3723,53 @@ var buzz = {
 ;App.Stations=
 [
     {
+        "url": "http://somafm.com/groovesalad/", 
+        "streams": [
+            {
+                "url": "http://sfstream1.somafm.com:3000", 
+                "type": "aac"
+            }, 
+            {
+                "url": "http://mp2.somafm.com:3000", 
+                "type": "aac"
+            }, 
+            {
+                "url": "http://mp4.somafm.com:3000", 
+                "type": "aac"
+            }, 
+            {
+                "url": "http://mp3.somafm.com:80", 
+                "type": "mp3"
+            }, 
+            {
+                "url": "http://sfstream1.somafm.com:8032", 
+                "type": "mp3"
+            }, 
+            {
+                "url": "http://mp2.somafm.com:8032", 
+                "type": "mp3"
+            }, 
+            {
+                "url": "http://ice.somafm.com/groovesalad", 
+                "type": "mp3"
+            }, 
+            {
+                "url": "http://sfstream1.somafm.com:9002", 
+                "type": "aac"
+            }, 
+            {
+                "url": "http://mp2.somafm.com:9002", 
+                "type": "aac"
+            }, 
+            {
+                "url": "http://ice.somafm.com/groovesalad-64.aac", 
+                "type": "aac"
+            }
+        ], 
+        "name": "Groove Salad", 
+        "description": "A nicely chilled plate of ambient/downtempo beats and grooves."
+    }, 
+    {
         "url": "http://chillstep.info/", 
         "streams": [
             {
@@ -3826,7 +3873,7 @@ var buzz = {
     function pause() {
         App.debug( "Player", "pause" );
 
-        currentStation.sound.fadeOut().pause();
+        currentStation.sound.stop();
         currentStation.playing = false;
     };
 

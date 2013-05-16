@@ -61,7 +61,7 @@
     function pause() {
         App.debug( "Player", "pause" );
 
-        currentStation.sound.fadeOut().pause();
+        currentStation.sound.stop();
         currentStation.playing = false;
     };
 
