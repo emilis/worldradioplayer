@@ -55,6 +55,7 @@ static/js/lib/buzz.js \
 static/js/app.js \
 static/js/stations.js \
 static/js/sound-player.js \
+static/js/station.js \
 static/js/player.js \
 static/js/station-list.js \
 static/js/explorer.js

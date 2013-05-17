@@ -43,8 +43,8 @@
         var pstation = App.SoundPlayer.getCurrentStation();
         App.SoundPlayer.playStation( station );
         App.Player.showStation( station );
-        pstation && App.StationList.updateStation( pstation );
-        App.StationList.updateStation( station );
+        pstation && App.Station.updateView( pstation );
+        App.Station.updateView( station );
     };
 
     function pauseStation( station ) {
@@ -55,7 +55,7 @@
         }
         App.SoundPlayer.pause();
         App.Player.update();
-        App.StationList.updateStation( station );
+        App.Station.updateView( station );
     };
 
     function stop() {
@@ -63,7 +63,7 @@
         var station = App.SoundPlayer.getCurrentStation();
         App.SoundPlayer.stop();
         App.Player.update();
-        App.StationList.updateStation( station );
+        App.Station.updateView( station );
     };
 
     /// Utilities: -------------------------------------------------------------
