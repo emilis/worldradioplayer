@@ -1,4 +1,4 @@
-# World Radio Player
+# ![Icon][icon] World Radio Player
 
 A player for Internet radio stations on Firefox OS.
 
@@ -50,3 +50,6 @@ $ make zip
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+[icon]: https://raw.github.com/emilis/worldradioplayer/master/static/img/icons/30.png
