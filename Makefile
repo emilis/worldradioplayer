@@ -64,8 +64,9 @@ static/js/explorer.js
 ### App.Stations Array is created from data in a YAML file:
 #
 static/js/stations.js: \
-static/js/data/stations.yml
+static/js/data/xiph.org.stations.json
 	echo ";App.Stations=" > $@
-	$(YAML2JSON) < $^ >> $@
+	# $(YAML2JSON) < $^ >> $@
+	cat $^ >> $@
 	echo ";" >> $@
 

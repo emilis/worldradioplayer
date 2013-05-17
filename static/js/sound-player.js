@@ -76,8 +76,14 @@
     function isStreamSupported( stream ) {
 
         var supported = {
-            "ogg":  true,
-            "wav":  true,
+            "wav":              true,
+            "ogg":              true,
+            "application/ogg":  true,
+            "audio/aacp":       false,
+            "audio/aac":        false,
+            "audio/mpeg":       false,
+            "data":             false,
+            "video":            false,
         }
 
         return !! supported[ stream.type ];

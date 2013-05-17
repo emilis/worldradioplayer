@@ -36,7 +36,9 @@
     function showStations( stations ) {
 
         $list.html( "" );
-        _.forEach( stations, addStation );
+        _.forEach(
+            _.filter( stations, App.SoundPlayer.isStationSupported ).slice( 0, 20 ),
+            addStation );
 
         function addStation( station ){
             $list.append( getStationView( station ));
@@ -47,9 +49,11 @@
 
         if ( !station.$view ) {
             var $view = station.$view = $( station_tpl );
+            /*
             if ( !App.SoundPlayer.isStationSupported( station )) {
                 $view.addClass( "unsupported" );
             }
+            */
             $view.find( ".name" ).html( station.name );
             $view.find( ".description" ).html( station.description );
             $view.on( "click", ".play", toggle );
