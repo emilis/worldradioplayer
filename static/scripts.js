@@ -3726,6 +3726,10 @@ var buzz = {
         "url": "http://somafm.com/groovesalad/", 
         "streams": [
             {
+                "url": "http://vps1.emilis.net:8000/somafm-groovesalad.ogg", 
+                "type": "ogg"
+            }, 
+            {
                 "url": "http://sfstream1.somafm.com:3000", 
                 "type": "aac"
             }, 

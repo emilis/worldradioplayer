@@ -2,6 +2,8 @@
     description:    A nicely chilled plate of ambient/downtempo beats and grooves.
     url:            http://somafm.com/groovesalad/
     streams:
+        -   type:   ogg
+            url:    http://vps1.emilis.net:8000/somafm-groovesalad.ogg
         -   type:   aac
             url:    http://sfstream1.somafm.com:3000
         -   type:   aac
