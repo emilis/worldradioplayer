@@ -64,7 +64,7 @@ static/js/explorer.js
 ### App.Stations Array is created from data in a YAML file:
 #
 static/js/stations.js: \
-static/js/stations.yml
+static/js/data/stations.yml
 	echo ";App.Stations=" > $@
 	$(YAML2JSON) < $^ >> $@
 	echo ";" >> $@
