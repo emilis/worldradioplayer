@@ -27,7 +27,6 @@ Makefile
 
 static: \
 static/style.css \
-static/scripts.js \
 icons
 
 
@@ -38,8 +37,7 @@ icons:
 ### CSS: -----------------------------------------------------------------------
 
 static/style.css: \
-static/css/*.less \
-static/fonts/awesome/font-awesome.css
+static/css/*.less
 	lessc -x static/css/style.less $@
 
 
@@ -50,9 +48,14 @@ static/fonts/awesome/font-awesome.css
 #
 static/scripts.js: \
 static/js/lib/underscore.js \
+static/js/lib/async_storage.js \
 static/js/lib/zepto.js \
 static/js/lib/buzz.js \
+static/js/lib/objectfs-xhrjson.js \
+static/js/lib/objectfs-indexeddb.js \
 static/js/app.js \
+static/js/storage.js \
+static/js/station-db.js \
 static/js/stations.js \
 static/js/sound-player.js \
 static/js/station.js \
