@@ -21,7 +21,7 @@
 
         $list =         $( document.getElementById( "station-list" ).innerHTML );
 
-        showStations( App.Stations );
+        App.Db.stations.list( null, { limit: 20 }, showStations );
     };
 
     function getView() {
@@ -29,12 +29,20 @@
         return $list;
     };
 
-    function showStations( stations ) {
+    function showStations( err, stations ) {
 
-        $list.html( "" );
-        _.forEach(
-            _.filter( stations, App.SoundPlayer.isStationSupported ).slice( 0, 20 ),
-            addStation );
+        if ( err ) {
+            $list.html( '<p class="error">Error loading station list.</p>' );
+            return;
+        } else if ( !stations || !stations.length ) {
+            $list.html( '<p class="error">Error: station DB is empty.</p>' );
+            return;
+        } else {
+            $list.html( "" );
+            _.forEach(
+                _.filter( stations, App.SoundPlayer.isStationSupported ).slice( 0, 20 ),
+                addStation );
+        }
 
         function addStation( station ){
             $list.append( App.Station.getView( station ));
