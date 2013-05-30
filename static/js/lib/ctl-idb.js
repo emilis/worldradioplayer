@@ -84,20 +84,13 @@
                 cb( openreq.error, openreq );
             };
             function withStoreOnUpgradeNeeded( evt ) {
-                debug( "upgrade needed." );
                 createSchema( openreq.result, evt.oldVersion, evt.newVersion );
             };
             function withStoreOnSuccess() {
                 db =    openreq.result;
-                debug( "open withStore success:", db );
                 withStoreDone();
             }
         };
-    };
-
-    function debug() {
-
-        console.log.apply( console, arguments );
     };
 
 })( window );

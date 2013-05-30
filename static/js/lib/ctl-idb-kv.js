@@ -69,7 +69,6 @@
                     callback( null, req.result );
                 };
                 function readOnError() {
-                    console.error( 'Error in Storage.getItem(): ', req.error.name );
                     callback && callback( req.error );
                 };
             });
@@ -90,7 +89,6 @@
                     callback && callback( null, req );
                 };
                 function writeOnError() {
-                    console.error( 'Error in Storage.setItem(): ', req.error.name );
                     callback && callback( req.error );
                 };
             });
@@ -111,7 +109,6 @@
                     callback && callback( null, req );
                 };
                 function removeOnError() {
-                    console.error( 'Error in Storage.removeItem(): ', req.error.name );
                     callback && callback( req.error );
                 };
             });
@@ -132,7 +129,6 @@
                     callback && callback( null, req );
                 };
                 function clearOnError() {
-                    console.error( 'Error in Storage.clear(): ', req.error.name );
                     callback && callback( req.error );
                 };
             });
@@ -153,7 +149,6 @@
                     callback( null, req.result );
                 };
                 function countOnError() {
-                    console.error( 'Error in Storage.length(): ', req.error.name );
                     callback( req.error );
                 };
             });
