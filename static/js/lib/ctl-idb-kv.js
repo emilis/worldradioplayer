@@ -28,12 +28,12 @@
 
 ------------------------------------------------------------------------------*/
 
-;(function( CtlIdb ){
+;(function( window, CtlIdb ){
 
     /// Exports ----------------------------------------------------------------
 
-    CtlIdbKvStore =        connect;
-    CtlIdbKvStore.create = create;
+    window.CtlIdbKvStore =          connect;
+    window.CtlIdbKvStore.create =   create;
 
     /// Functions: -------------------------------------------------------------
 
@@ -55,7 +55,11 @@
 
 
         function read( key, callback ) {
-            withStore( CtlIdb.OP_READ, function getItemBody( store ){
+            withStore( CtlIdb.OP_READ, function readBody( err, store ){
+
+                if ( err ) {
+                    return callback( err, null );
+                }
 
                 var req =       store.get( key );
                 req.onsuccess = readOnSuccess;
@@ -72,7 +76,11 @@
         }
 
         function write( key, value, callback ) {
-            withStore( CtlIdb.OP_WRITE, function setItemBody( store ){
+            withStore( CtlIdb.OP_WRITE, function writeBody( err, store ){
+
+                if ( err ) {
+                    return callback( err, null );
+                }
 
                 var req =       store.put( value, key );
                 req.onerror =   writeOnError;
@@ -89,7 +97,11 @@
         }
 
         function remove( key, callback ) {
-            withStore( CtlIdb.OP_WRITE, function removeItemBody( store ){
+            withStore( CtlIdb.OP_WRITE, function removeBody( err, store ){
+
+                if ( err ) {
+                    return callback( err, null );
+                }
 
                 var req =       store.delete( key );
                 req.onerror =   removeOnError;
@@ -106,7 +118,11 @@
         }
 
         function clear( callback ) {
-            withStore( CtlIdb.OP_WRITE, function clearBody( store ){
+            withStore( CtlIdb.OP_WRITE, function clearBody( err, store ){
+
+                if ( err ) {
+                    return callback( err, null );
+                }
 
                 var req =       store.clear();
                 req.onerror =   clearOnError;
@@ -123,7 +139,11 @@
         }
 
         function count( callback ) {
-            withStore( CtlIdb.OP_READ, function lengthBody( store ) {
+            withStore( CtlIdb.OP_READ, function countBody( err, store ) {
+
+                if ( err ) {
+                    return callback( err, null );
+                }
 
                 var req =       store.count();
                 req.onsuccess = countOnSuccess;
@@ -140,7 +160,11 @@
         }
 
         function list( filter, options, callback ) {
-            withStore( CtlIdb.OP_READ, function listBody( store ){
+            withStore( CtlIdb.OP_READ, function listBody( err, store ){
+
+                if ( err ) {
+                    return callback( err, null );
+                }
 
                 var results =   [];
                 var req =       store.openCursor();
@@ -165,5 +189,5 @@
         }
     };  /// end of connect()
 
-}( window.CtlIdb ));
+}( window, window.CtlIdb ));
 

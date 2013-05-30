@@ -19,7 +19,7 @@
             ...
             return {
                 doSomething: function( ... ){
-                    withStore( CtlIdb.OP_READ, function( store ) {
+                    withStore( CtlIdb.OP_READ, function( err, store ) {
                         ...
                     });
                 },
@@ -78,10 +78,10 @@
             }
 
             function withStoreDone() {
-                cb( db.transaction( store_name, op_type ).objectStore( store_name ));
+                cb( null, db.transaction( store_name, op_type ).objectStore( store_name ));
             };
             function withStoreOnError() {
-                console.error( "Storage: can't open database:", openreq.error.name );
+                cb( openreq.error, openreq );
             };
             function withStoreOnUpgradeNeeded( evt ) {
                 debug( "upgrade needed." );
