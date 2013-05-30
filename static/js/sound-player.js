@@ -66,11 +66,38 @@
     };
 
     function getSound( station ) {
+        App.debug( "Player", "getSound", station );
 
         var streams = _.filter( station.streams, isStreamSupported );
         if ( streams && streams.length ) {
-            return new buzz.sound( streams[0].url, SOUND_OPT );
+            var sound = new buzz.sound( streams[0].url, SOUND_OPT );
+            //sound.bind( "durationchange", reloadSound );
+            sound.bind( "ended", reloadSound );
+            //debugSound( sound );
+            return sound;
         }
+
+        function reloadSound() {
+            App.debug( "Player", "Reloading sound", sound );
+            sound.stop().load().play();
+            //setTimeout( function(){ sound.load().play(); }, 50 );
+        }
+    };
+
+    function debugSound( sound ) {
+
+        var events = "abort canplay canplaythrough dataunavailable durationchange emptied empty ended error loadeddata loadedmetadata loadstart pause play playing ratechange seeked seeking suspend volumechange waiting";
+        events = events.split( " " );
+
+        for ( var i=0,len=events.length; i<len; i++ ) {
+            sound.bind( events[i], logEvent( events[i] ));
+        }
+
+        function logEvent( name ) {
+            return function( e ) {
+                console.log( "soundEvent", name, sound.getErrorCode(), sound.getStateCode(), sound.getNetworkStateCode() );
+            };
+        };
     };
 
     function isStreamSupported( stream ) {
