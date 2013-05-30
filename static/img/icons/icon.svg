@@ -622,15 +622,15 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="51.148753"
-     inkscape:cy="27.60192"
+     inkscape:zoom="11.2"
+     inkscape:cx="43.8966"
+     inkscape:cy="16.305366"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
-     showgrid="false"
+     inkscape:current-layer="layer4"
+     showgrid="true"
      inkscape:window-width="1871"
      inkscape:window-height="1055"
-     inkscape:window-x="49"
+     inkscape:window-x="1649"
      inkscape:window-y="0"
      inkscape:window-maximized="1">
     <inkscape:grid
@@ -658,7 +658,8 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-992.36218)"
-     style="display:inline">
+     style="display:inline"
+     sodipodi:insensitive="true">
     <g
        id="layer1-5"
        transform="matrix(0.171973,0,0,0.171973,159.09726,953.05952)" />
@@ -684,7 +685,7 @@
        sodipodi:cy="56.485737"
        sodipodi:cx="193.56345"
        id="path3527"
-       style="opacity:0.52016129;fill:url(#radialGradient3260);fill-opacity:1;stroke:url(#linearGradient3262);stroke-width:1.79430114999999990;stroke-miterlimit:4;stroke-opacity:1;display:inline"
+       style="opacity:0.52016129;fill:url(#radialGradient3260);fill-opacity:1;stroke:url(#linearGradient3262);stroke-width:1.79430115;stroke-miterlimit:4;stroke-opacity:1;display:inline"
        sodipodi:type="arc"
        transform="matrix(0.56473883,-0.1009852,0.07114915,0.39788378,-86.481735,1004.0284)" />
   </g>
@@ -744,13 +745,12 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Play"
-     sodipodi:insensitive="true"
      style="display:inline">
     <path
        id="path2936"
        style="fill:#eeeeec;fill-opacity:1;fill-rule:nonzero;stroke:none;filter:url(#filter9250)"
        d="m 39.302282,29.293741 c 0.29823,0.21494 0.451374,0.478241 0.451374,0.787218 0,0.314349 -0.153144,0.577651 -0.451374,0.781844 l -15.575089,8.965684 c -0.137024,0.08598 -0.282108,0.128964 -0.43794,0.128964 -0.155831,0 -0.303603,-0.04299 -0.448687,-0.128964 -0.300916,-0.171952 -0.451374,-0.427193 -0.451374,-0.771097 l 0,-17.955549 c 0,-0.335844 0.150458,-0.593772 0.451374,-0.771098 0.31435,-0.198819 0.612579,-0.198819 0.886627,0 l 15.575089,8.962998 z"
        inkscape:connector-curvature="0"
-       transform="matrix(0.73154213,0,0,0.73154213,8.3413682,8.0794575)" />
+       transform="matrix(0.73154213,0,0,0.73154213,8.6506288,8.0111304)" />
   </g>
 </svg>
