@@ -1,9 +1,9 @@
-;(function( _, App, CtlIdb, CtlIdbKvStore ){
+;(function( App, CtlIdb, CtlIdbKvStore ){
 
     /// Constants: -------------------------------------------------------------
 
     var DBNAME =    "worldradioplayer";
-    var DBVERSION = 2;
+    var DBVERSION = 3;
 
     /// Exports: ---------------------------------------------------------------
 
@@ -12,6 +12,7 @@
         DBVERSION,
         {
             settings:   CtlIdbKvStore,
+            stations:   App.DbStations,
         },
         createSchema );
 
@@ -20,34 +21,14 @@
     function createSchema( db, oldVersion, newVersion ) {
 
         if ( oldVersion < 2 ) {
-
-            CtlIdbKvStore.create( db, "settings" );
-        } else {
-
-            /*
-            var store = db.createObjectStore( "stations", { autoIncrement: true });
-            store.createIndex( "name",   "name" );
-            store.createIndex( "genre",  "genre" );
-            store.createIndex( "domain", "domain" );
-            store.createIndex( "songs_played", "songs_played" );
-
-            ObjectFsXhrJson.list( "/static/js/data/xiph.org.stations.json", null, null, createStations );
-            */
-        }
-
-        function createStations( err, stations ) {
             
-            if ( err ) {
-                store.transaction.abort();
-            } else {
-                _.each( stations, addStation );
-            }
-        };
+            CtlIdbKvStore.create( db, "settings" );
 
-        function addStation( station ) {
-            store.put( station );
+        } 
+        if ( oldVersion < 3 ) {
+
+            CtlIdbKvStore.create( db, "stations" );
         }
     };
 
-
-})( window._, window.App, window.CtlIdb );
+})( window.App, window.CtlIdb, window.CtlIdbKvStore );
