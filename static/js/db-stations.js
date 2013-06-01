@@ -75,7 +75,6 @@
         };
 
         function createStations( err, stations ) {
-            console.log( "createStations", err, stations && stations.length );
 
             if ( err ) {
                 return resolveWaiting( err );
@@ -92,7 +91,6 @@
                 }
 
                 for ( var i=0,len=stations.length; i<len; i++ ) {
-                    console.log( "saveStation", i, stations[i].name );
                     store.put( stations[i], stations[i].name );
                 }
                 resolveWaiting();
