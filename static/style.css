@@ -2,7 +2,7 @@ body{margin:0;padding:0;background-color:#000000;color:#eaeff2;font-family:Robot
 div,p,button,th,td{font-size:1.6rem;}
 button{padding:0.8rem 1.1rem;color:#000000;}button.disabled{color:#909498;}
 #player{position:fixed;left:0;right:0;top:0;height:10rem;padding:0 1rem;border-bottom:0.2rem solid #909498;background-color:#4d4e53;}#player>p{line-height:2rem;}
-#explorer{position:fixed;left:0;right:0;top:10rem;bottom:0;height:auto;}
+#explorer{position:fixed;left:0;right:0;top:10.2rem;bottom:0;height:auto;}
 .station-list{list-style:none;display:block;padding:0;margin:0;}.station-list>li{list-style:none;display:block;padding:0;margin:0;}
 .station-list>.station{padding:1rem;min-height:4rem;overflow:hidden;border-bottom:0.1rem solid #4d4e53;}.station-list>.station.playing{background-color:#4d4e53;}
 .station-list>.station>.buttons{float:right;text-align:right;}
