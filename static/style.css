@@ -1,4 +1,3 @@
-@import "fonts/awesome/font-awesome.css";
 body{margin:0;padding:0;background-color:#000000;color:#eaeff2;font-family:Roboto,Helvetica,Arial,sans-serif;font-size:10px;}
 div,p,button,th,td{font-size:1.6rem;}
 button{padding:0.8rem 1.1rem;color:#000000;}button.disabled{color:#909498;}
