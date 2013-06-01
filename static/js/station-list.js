@@ -19,9 +19,12 @@
 
     function init() {
 
-        $list =         $( document.getElementById( "station-list" ).innerHTML );
+        $list = $( document.getElementById( "station-list" ).innerHTML );
 
-        App.Db.stations.list( null, { limit: 20 }, showStations );
+        App.Db.stations.list(
+            App.SoundPlayer.isStationSupported,
+            { limit: 20 },
+            showStations );
     };
 
     function getView() {
@@ -39,11 +42,7 @@
             return;
         } else {
             $list.html( "" );
-            _.forEach(
-                _.filter(
-                    _.map( stations, App.Station.fromInfo ),
-                    App.SoundPlayer.isStationSupported ).slice( 0, 20 ),
-                addStation );
+            _( stations ).map( App.Station.fromInfo ).forEach( addStation );
         }
 
         function addStation( info ){
