@@ -41,36 +41,3 @@ static/css/*.less
 	lessc -x static/css/style.less $@
 
 
-### JS: ------------------------------------------------------------------------
-
-### All JS files are joined into one.
-### The order of the dependencies is important!
-#
-static/scripts.js: \
-static/js/lib/underscore.js \
-static/js/lib/async_storage.js \
-static/js/lib/zepto.js \
-static/js/lib/buzz.js \
-static/js/lib/objectfs-xhrjson.js \
-static/js/lib/objectfs-indexeddb.js \
-static/js/app.js \
-static/js/storage.js \
-static/js/station-db.js \
-static/js/stations.js \
-static/js/sound-player.js \
-static/js/station.js \
-static/js/player.js \
-static/js/station-list.js \
-static/js/explorer.js
-	cat $^ > "$@"
-
-
-### App.Stations Array is created from data in a YAML file:
-#
-static/js/stations.js: \
-static/js/data/xiph.org.stations.json
-	echo ";App.Stations=" > $@
-	# $(YAML2JSON) < $^ >> $@
-	cat $^ >> $@
-	echo ";" >> $@
-
