@@ -71,7 +71,7 @@
             $play.addClass( "disabled" ).html( App.LABEL_PLAY );
             $stop.addClass( "disabled" );
         } else {
-            $song_name.html( station.name );
+            $song_name.html( station.info.name );
             $play.removeClass( "disabled" );
             $stop.removeClass( "disabled" );
             if ( station.playing ) {
