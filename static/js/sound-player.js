@@ -68,7 +68,7 @@
     function getSound( station ) {
         App.debug( "Player", "getSound", station );
 
-        var streams = _.filter( station.streams, isStreamSupported );
+        var streams = _.filter( station.info.streams, isStreamSupported );
         if ( streams && streams.length ) {
             var sound = new buzz.sound( streams[0].url, SOUND_OPT );
             //sound.bind( "durationchange", reloadSound );
@@ -136,7 +136,7 @@
 
     function isStationSupported( station ) {
 
-        return _.some( station.streams, isStreamSupported );
+        return _.some( station.info.streams, isStreamSupported );
     };
 
 })( window._, window.buzz, window.App );

@@ -7,6 +7,7 @@
     /// Exports: ---------------------------------------------------------------
 
     App.Station = {
+        fromInfo:   fromInfo,
         getView:    getView,
         updateView: updateView,
     };
@@ -23,6 +24,14 @@
     };
 
 
+    function fromInfo( info ) {
+
+        return {
+            info:   info,
+        };
+    };
+
+
     function getView( station ) {
 
         if ( !station.$view ) {
@@ -32,8 +41,8 @@
                 $view.addClass( "unsupported" );
             }
             */
-            $view.find( ".name" ).html( station.name );
-            $view.find( ".description" ).html( station.description );
+            $view.find( ".name" ).html( station.info.name );
+            $view.find( ".description" ).html( station.info.description );
             $view.on( "click", ".play", toggle );
             station.$view = $view;
         }

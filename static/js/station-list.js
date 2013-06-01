@@ -40,12 +40,14 @@
         } else {
             $list.html( "" );
             _.forEach(
-                _.filter( stations, App.SoundPlayer.isStationSupported ).slice( 0, 20 ),
+                _.filter(
+                    _.map( stations, App.Station.fromInfo ),
+                    App.SoundPlayer.isStationSupported ).slice( 0, 20 ),
                 addStation );
         }
 
-        function addStation( station ){
-            $list.append( App.Station.getView( station ));
+        function addStation( info ){
+            $list.append( App.Station.getView( info ));
         };
     };
 
