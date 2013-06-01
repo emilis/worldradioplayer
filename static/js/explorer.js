@@ -19,13 +19,13 @@
     function init() {
 
         $explorer = $( "#explorer" );
-        show( App.StationList.getView() );
+        show( "genres", App.StationList.getView() );
     };
 
 
-    function show( $view ) {
+    function show( name, $view ) {
 
-        $explorer.html( "" ).append( $view );
+        $explorer.find( '#'+name+' > .tabpanel' ).html( "" ).append( $view );
     };
 
 })( window._, window.$, window.App );

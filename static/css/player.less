@@ -17,48 +17,54 @@
 
 #explorer {
 
-    margin-top:         @playerHeight;
+    //margin-top:         @playerHeight;
+    position:           fixed;
+    left:               0;
+    right:              0;
+    top:                @playerHeight;
+    bottom:             0;
+    height:             auto;
+}
 
-    > .station-list {
-        .nolist();
+.station-list {
+    .nolist();
 
-        > .station {
-            padding:        1rem;
-            min-height:     4rem;
-            overflow:       hidden;
-            border-bottom:  0.1rem solid @charcoal;
+    > .station {
+        padding:        1rem;
+        min-height:     4rem;
+        overflow:       hidden;
+        border-bottom:  0.1rem solid @charcoal;
 
-            &.playing {
-                background-color:   @charcoal;
+        &.playing {
+            background-color:   @charcoal;
+        }
+
+        > .buttons {
+            float:      right;
+            text-align: right;
+        }
+        > .info {
+            margin:     0 10rem 0 0;
+            > .name {
+                display:        block;
+                font-weight:    bold;
             }
+            > .description {
+                font-weight:    normal;
+                font-size:      1.2rem;
+                color:          @gray;
+            }
+        }
 
+        &.unsupported {
+            display:        none;
             > .buttons {
-                float:      right;
-                text-align: right;
+                display:    none;
             }
             > .info {
-                margin:     0 10rem 0 0;
-                > .name {
-                    display:        block;
-                    font-weight:    bold;
-                }
-                > .description {
-                    font-weight:    normal;
-                    font-size:      1.2rem;
-                    color:          @gray;
-                }
-            }
-
-            &.unsupported {
-                display:        none;
-                > .buttons {
-                    display:    none;
-                }
-                > .info {
-                    margin:     0;
-                    font-style: italic;
-                    color:      @charcoal;
-                }
+                margin:     0;
+                font-style: italic;
+                color:      @charcoal;
             }
         }
     }

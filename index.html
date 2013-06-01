@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=320">
         <!-- CSS: -->
         <link rel="stylesheet" type="text/css" href="/static/fonts/awesome/font-awesome.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/gaia/tabs.css">
         <link rel="stylesheet" type="text/css" href="/static/style.css">
         <!-- JavaScript: -->
         <script src="/static/js/lib/lodash.js"></script> 
@@ -34,9 +35,32 @@
             </p>
         </div>
 
-        <div id="explorer">
-            <p>Loading stations...</p>
-        </div>
+        <ul id="explorer" role="tablist" data-items="4" class="bottom">
+            <li id="last" role="tab">
+                <a href="#last">Last</a>
+                <div role="tabpanel" class="tabpanel">
+                    <p>Loading station list...</p>
+                </div>
+            </li>
+            <li id="genres" role="tab">
+                <a href="#genres">All</a>
+                <div role="tabpanel" class="tabpanel">
+                    <p>Loading all stations...</p>
+                </div>
+            </li>
+            <li id="countries" role="tab" aria-disabled="true">
+                <a>Countries</a>
+                <div role="tabpanel" class="tabpanel">
+                    <p>Under construction.</p>
+                </div>
+            </li>
+            <li id="add-station" role="tab" aria-disabled="true">
+                <a>+Add</a>
+                <div role="tabpanel" class="tabpanel">
+                    <p>Under construction.</p>
+                </div>
+            </li>
+        </ul>
 
         <script id="station-list" type="text/html">
             <ul class="station-list"></ul>
