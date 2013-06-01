@@ -7,7 +7,8 @@
     /// Exports: ---------------------------------------------------------------
 
     App.Explorer = {
-        show:   show,
+        show:       show,
+        update:     update,
     };
 
     /// Init: ------------------------------------------------------------------
@@ -19,13 +20,25 @@
     function init() {
 
         $explorer = $( "#explorer" );
-        show( "genres", App.StationList.getView() );
+        update( "last", App.StationList.getView() );
+        update( "search", App.Genres.getView() );
+        show( "last" );
     };
 
 
-    function show( name, $view ) {
+    function update( name, $view ) {
 
-        $explorer.find( '#'+name+' > .tabpanel' ).html( "" ).append( $view );
+        getTab( name ).html( "" ).append( $view );
+    };
+
+    function show( name ) {
+
+        getTab( name ).show();
+    };
+
+    function getTab( name ) {
+
+        return $explorer.find( '#'+name+' > .tabpanel' );
     };
 
 })( window._, window.$, window.App );

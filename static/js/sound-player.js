@@ -136,7 +136,8 @@
 
     function isStationSupported( station ) {
 
-        return _.some( station.info.streams, isStreamSupported );
+        var streams = station.streams || station.info.streams;
+        return _.some( streams, isStreamSupported );
     };
 
 })( window._, window.buzz, window.App );

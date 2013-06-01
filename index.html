@@ -13,6 +13,7 @@
         <script src="/static/js/lib/lodash.js"></script> 
         <script src="/static/js/lib/zepto.js"></script> 
         <script src="/static/js/lib/buzz.js"></script> 
+        <script src="/static/js/lib/objectfs/utils.js"></script> 
         <script src="/static/js/lib/objectfs/xhrjson.js"></script> 
         <script src="/static/js/lib/ctl/idb.js"></script>
         <script src="/static/js/lib/ctl/idb-kv.js"></script>
@@ -23,6 +24,7 @@
         <script src="/static/js/station.js"></script> 
         <script src="/static/js/player.js"></script> 
         <script src="/static/js/station-list.js"></script> 
+        <script src="/static/js/genres.js"></script>
         <script src="/static/js/explorer.js"></script>
     </head>
     <body role="app">
@@ -37,25 +39,25 @@
 
         <ul id="explorer" role="tablist" data-items="4" class="bottom">
             <li id="last" role="tab">
-                <a href="#last">Last</a>
+                <a href="#last"><i class="icon-star"></i></a>
                 <div role="tabpanel" class="tabpanel">
                     <p>Loading station list...</p>
                 </div>
             </li>
-            <li id="genres" role="tab">
-                <a href="#genres">All</a>
+            <li id="search" role="tab">
+                <a href="#search"><i class="icon-search"></i></a>
                 <div role="tabpanel" class="tabpanel">
                     <p>Loading all stations...</p>
                 </div>
             </li>
-            <li id="countries" role="tab" aria-disabled="true">
-                <a>Countries</a>
+            <li id="add-station" role="tab" aria-disabled="true">
+                <a><i class="icon-plus"></i></a>
                 <div role="tabpanel" class="tabpanel">
                     <p>Under construction.</p>
                 </div>
             </li>
-            <li id="add-station" role="tab" aria-disabled="true">
-                <a>+Add</a>
+            <li id="settings" role="tab" aria-disabled="true">
+                <a><i class="icon-cogs"></i></a>
                 <div role="tabpanel" class="tabpanel">
                     <p>Under construction.</p>
                 </div>
@@ -74,6 +76,7 @@
                 <div class="info">
                     <span class="name"></span>
                     <span class="description"></span>
+                    <span class="genre"></span>
                 </div>
             </li>
         </script>

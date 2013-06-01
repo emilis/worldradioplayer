@@ -43,6 +43,7 @@
             */
             $view.find( ".name" ).html( station.info.name );
             $view.find( ".description" ).html( station.info.description );
+            $view.find( ".genre" ).html( station.info.genre );
             $view.on( "click", ".play", toggle );
             station.$view = $view;
         }
