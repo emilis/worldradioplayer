@@ -7,8 +7,8 @@
     top:                0;
     height:             @playerHeight;
     padding:            0 1rem;
-    border-bottom:      0.2rem solid @gray;
-    background-color:   @charcoal;
+    //border-bottom:      0.1rem solid @gray;
+    background-color:   @black; //@charcoal;
 
     > p {
         line-height:    2rem;
@@ -21,22 +21,23 @@
     position:           fixed;
     left:               0;
     right:              0;
-    top:                (@playerHeight + 0.2rem);
+    top:                @playerHeight;
     bottom:             0;
     height:             auto;
 }
 
 .station-list {
     .nolist();
+    background-color:   @charcoal;
 
     > .station {
         padding:        1rem;
         min-height:     4rem;
         overflow:       hidden;
-        border-bottom:  0.1rem solid @charcoal;
+        border-bottom:  0.1rem solid @border;
 
         &.playing {
-            background-color:   @charcoal;
+            background-color:   @darkblue;
         }
 
         > .buttons {
@@ -50,6 +51,11 @@
                 font-weight:    bold;
             }
             > .description {
+                font-weight:    normal;
+                font-size:      1.2rem;
+                color:          @gray;
+            }
+            > .genre {
                 font-weight:    normal;
                 font-size:      1.2rem;
                 color:          @gray;
