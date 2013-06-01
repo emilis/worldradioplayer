@@ -18,6 +18,7 @@
 
     Dependencies:
         window.CtlIdb
+        window.ObjectFsUtils
 
     Author:     Emilis Dambauskas <emilis.d@gmail.com>.
 
@@ -28,7 +29,7 @@
 
 ------------------------------------------------------------------------------*/
 
-;(function( window, CtlIdb ){
+;(function( window, CtlIdb, ObjectFsUtils ){
 
     /// Exports ----------------------------------------------------------------
 
@@ -162,6 +163,11 @@
                 }
 
                 var results =   [];
+                var filterFn =  ObjectFsUtils.itemFilter( filter );
+                var offset =    ( options && options.offset ) || 0;
+                var limit =     ( options && options.limit  ) || Infinity;
+                var count =     0;
+
                 var req =       store.openCursor();
                 req.onsuccess = listOnSuccess;
                 req.onerror =   listOnError;
@@ -169,11 +175,19 @@
                 function listOnSuccess() {
                     var cursor = req.result;
                     if (!cursor) {
-                        callback( null, results );
+                        callback( null, ObjectFsUtils.applyOptions( results, options ));
                         return;
                     } else {
-                        results.push( cursor.value );
-                        cursor.continue();
+                        count++;
+                        if ( filterFn( cursor.value ) && count > offset ) {
+                            results.push( cursor.value );
+                        }
+                        if ( results.length >= limit ) {
+                            callback( null, results );
+                            return;
+                        } else {
+                            cursor.continue();
+                        }
                     }
                 };
 
@@ -184,5 +198,4 @@
         }
     };  /// end of connect()
 
-}( window, window.CtlIdb ));
-
+}( window, window.CtlIdb, window.ObjectFsUtils ));
