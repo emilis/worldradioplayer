@@ -1,10 +1,23 @@
+@playerHeight:          10rem;
+
 #player {
-    padding:            1rem;
+    position:           fixed;
+    left:               0;
+    right:              0;
+    top:                0;
+    height:             @playerHeight;
+    padding:            0 1rem;
     border-bottom:      0.2rem solid @gray;
     background-color:   @charcoal;
+
+    > p {
+        line-height:    2rem;
+    }
 }
 
 #explorer {
+
+    margin-top:         @playerHeight;
 
     > .station-list {
         .nolist();
