@@ -35,9 +35,9 @@
             var $list = getView();
 
             if ( err ) {
-                $list.html( '<p class="error">Error loading station list.</p>' );
+                $list.html( '<li class="error">Error loading station list.</li>' );
             } else if ( !stations || !stations.length ) {
-                $list.html( '<p class="error">Error: station DB is empty.</p>' );
+                $list.html( '<li class="warning">No stations in list.</li>' );
             } else {
                 $list.html( "" );
                 _( stations ).map( App.Station.fromInfo ).forEach( addStation );
