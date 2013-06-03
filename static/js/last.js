@@ -26,6 +26,7 @@
         update( switchToSearch );
 
         function switchToSearch( err, results ) {
+            $view.removeClass( "app-loading" );
             ( err || !results || !results.length ) && App.Explorer.show( "search" );
         }
     };
