@@ -15,12 +15,11 @@ $ make zip
 
 ## Known issues / roadmap
 
-- Only the first 20 stations from dir.xiph.org are shown.
-- Stream download is not stopped when station is stopped.
 - Only OGG streams are supported at the moment.
+- Stream download is not stopped when station is stopped.
 - ~~Playback may stop when song changes.~~
-- Home screen should show a list of last played / favorite stations.
-- No station search / filter by genre.
+- Playback interruptions due to new metadata are not handled properly and may cause problems when switching playing stations.
+- Network status is not shown for playing station ( buffering/playing/etc. ).
 - No song name shown for currently playing station.
 
 ## About
