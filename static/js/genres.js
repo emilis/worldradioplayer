@@ -12,13 +12,13 @@
         getView:    getView,
     };
 
-    /// Main: ------------------------------------------------------------------
+    /// Init: ------------------------------------------------------------------
 
-    main();
+    $( init );
 
     /// Functions: -------------------------------------------------------------
 
-    function main() {
+    function init() {
 
         $view = getView();
 
@@ -64,8 +64,7 @@
     function getView() {
 
         if ( !$view ) {
-            var html = [ '<select id="genre-list"></select>' ];
-            $view = $( html.join( "" ));
+            $view = $( "#search-genre" );
         }
         
         return $view;

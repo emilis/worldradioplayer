@@ -49,7 +49,11 @@
             <li id="search" role="tab">
                 <a href="#search"><i class="icon-search"></i></a>
                 <div role="tabpanel" class="tabpanel">
-                    <p>Loading all stations...</p>
+                    <form id="search-form">
+                        <label><span>Genre:</span> <select id="search-genre"></select></label>
+                        <label><span>Search:</span> <input id="search-query"> <button><i class="icon-search"></i></button></label>
+                    </form>
+                    <div id="search-results"></div>
                 </div>
             </li>
             <li id="add-station" role="tab" aria-disabled="true">
