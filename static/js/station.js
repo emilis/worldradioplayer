@@ -73,5 +73,12 @@
         }
     };
 
+    function updateInfo( station, info, cb ) {
+
+        station.info = _.merge( station.info, info );
+        App.Db.stations.write( station.info.name, station.info, cb );
+        return station;
+    };
+
 
 })( window._, window.$, window.App );
