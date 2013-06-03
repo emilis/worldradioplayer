@@ -23,22 +23,31 @@
         $view = $( "#last > .tabpanel" );
         $view.html( "" ).append( stationList.getView() );
 
-        update();
+        update( switchToSearch );
+
+        function switchToSearch( err, results ) {
+            ( err || !results || !results.length ) && App.Explorer.show( "search" );
+        }
     };
 
-    function update() {
+    function update( cb ) {
 
         stationList.anounceUpdate();
 
         stations.list(
             lastFilter,
             { limit: 10 },
-            stationList.update );
+            onUpdate );
+
+        function onUpdate( err, results ) {
+            stationList.update( err, results );
+            cb && cb( err, results );
+        };
     };
 
     function lastFilter( station ) {
 
-        return App.SoundPlayer.isStationSupported( station );
+        return station.last_played && App.SoundPlayer.isStationSupported( station );
     };
 
 })( window._, window.$, window.App );

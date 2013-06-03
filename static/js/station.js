@@ -8,9 +8,10 @@
     /// Exports: ---------------------------------------------------------------
 
     App.Station = {
-        fromInfo:   fromInfo,
-        getView:    getView,
-        updateView: updateView,
+        fromInfo:       fromInfo,
+        getView:        getView,
+        updateInfo:     updateInfo,
+        updateViews:    updateViews,
     };
 
     /// Init: ------------------------------------------------------------------
@@ -39,21 +40,32 @@
 
     function getView( station ) {
 
-        if ( !station.$view ) {
-            var $view = station.$view = $( station_tpl );
-            /*
-            if ( !App.SoundPlayer.isStationSupported( station )) {
-                $view.addClass( "unsupported" );
-            }
-            */
-            $view.find( ".name" ).html( station.info.name );
-            $view.find( ".description" ).html( station.info.description );
-            $view.find( ".genre" ).html( station.info.genre );
-            $view.on( "click", ".play", toggle );
-            station.$view = $view;
+        /// Get a collection of view elements disconnected from DOM:
+        var unused_views =  station.$views.not( hasParent );
+
+        if ( unused_views.length ) {
+            return unused_views[0];
+        } else {
+            var $view = createView( station );
+            station.$views.push( $view[0] );
+            updateViews( station );
+            return $view;
         }
 
-        return station.$view;
+        function hasParent( i ) {
+            return station.$views[i].parentNode;
+        }
+    };
+
+    function createView( station ) {
+
+        var $view = $( station_tpl );
+        $view.find( ".name" ).html( station.info.name );
+        $view.find( ".description" ).html( station.info.description );
+        $view.find( ".genre" ).html( station.info.genre );
+        $view.on( "click", ".play", toggle );
+
+        return $view;
 
         function toggle() {
             if ( station.playing ) {
@@ -64,12 +76,12 @@
         }
     };
 
-    function updateView( station ) {
+    function updateViews( station ) {
 
         if ( station.playing ) {
-            station.$view.addClass( "playing" ).find( ".play" ).html( App.LABEL_PAUSE );
+            station.$views.addClass( "playing" ).find( ".play" ).html( App.LABEL_PAUSE );
         } else {
-            station.$view.removeClass( "playing" ).find( ".play" ).html( App.LABEL_PLAY );
+            station.$views.removeClass( "playing" ).find( ".play" ).html( App.LABEL_PLAY );
         }
     };
 
