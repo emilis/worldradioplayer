@@ -13,6 +13,10 @@
     > p {
         line-height:    2rem;
     }
+
+    > .control {
+        text-align:     center;
+    }
 }
 
 #explorer {
@@ -24,11 +28,17 @@
     top:                @playerHeight;
     bottom:             0;
     height:             auto;
+
+    > li {
+        > .tabpanel {
+
+            background-color:   @charcoal;
+        }
+    }
 }
 
 .station-list {
     .nolist();
-    background-color:   @charcoal;
 
     > .station {
         padding:        1rem;
