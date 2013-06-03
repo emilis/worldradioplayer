@@ -20,8 +20,6 @@
     function init() {
 
         $explorer = $( "#explorer" );
-        update( "last", App.StationList.getView() );
-        //update( "search", App.Genres.getView() );
         show( "last" );
     };
 

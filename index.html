@@ -25,6 +25,8 @@
         <script src="/static/js/station.js"></script> 
         <script src="/static/js/player.js"></script> 
         <script src="/static/js/station-list.js"></script> 
+        <script src="/static/js/last.js"></script>
+        <script src="/static/js/search.js"></script>
         <script src="/static/js/genres.js"></script>
         <script src="/static/js/explorer.js"></script>
     </head>
@@ -51,8 +53,8 @@
                 <a href="#search"><i class="icon-search"></i></a>
                 <div role="tabpanel" class="tabpanel">
                     <form id="search-form">
-                        <label><span>Genre:</span> <select id="search-genre"></select></label>
-                        <label><span>Search:</span> <input id="search-query"> <button><i class="icon-search"></i></button></label>
+                        <label><select id="search-genre" disabled="true"><option value="">Choose a genre</option></select></label>
+                        <label><input id="search-query" placeholder="Type to search"></label>
                     </form>
                     <div id="search-results"></div>
                 </div>

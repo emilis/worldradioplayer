@@ -1,52 +1,52 @@
 ;(function( _, $, App ){
 
-    /// Variables: -------------------------------------------------------------
-
-    var $list;
-
     /// Exports: ---------------------------------------------------------------
 
-    App.StationList = {
-        getView:        getView,
-        showStations:   showStations,
-    };
-
-    /// Init: ------------------------------------------------------------------
-
-    $( init );
+    App.StationList = createStationList;
 
     /// Functions: -------------------------------------------------------------
 
-    function init() {
+    function createStationList() {
 
-        $list = $( document.getElementById( "station-list" ).innerHTML );
+        var $view;
 
-        App.Db.stations.list(
-            App.SoundPlayer.isStationSupported,
-            { limit: 20 },
-            showStations );
-    };
+        return {
+            getView:        getView,
+            anounceUpdate:  anounceUpdate,
+            update:         update,
+        };
+        
+        function getView() {
+            if ( !$view ) {
+                $view = $( document.getElementById( "station-list" ).innerHTML );
+            }
+            return $view;
+        };
 
-    function getView() {
 
-        return $list;
-    };
+        function anounceUpdate() {
+            
+            getView().addClass( "loading" );
+        };
 
-    function showStations( err, stations ) {
 
-        if ( err ) {
-            $list.html( '<p class="error">Error loading station list.</p>' );
-            return;
-        } else if ( !stations || !stations.length ) {
-            $list.html( '<p class="error">Error: station DB is empty.</p>' );
-            return;
-        } else {
-            $list.html( "" );
-            _( stations ).map( App.Station.fromInfo ).forEach( addStation );
-        }
+        function update( err, stations ) {
 
-        function addStation( info ){
-            $list.append( App.Station.getView( info ));
+            var $list = getView();
+
+            if ( err ) {
+                $list.html( '<p class="error">Error loading station list.</p>' );
+            } else if ( !stations || !stations.length ) {
+                $list.html( '<p class="error">Error: station DB is empty.</p>' );
+            } else {
+                $list.html( "" );
+                _( stations ).map( App.Station.fromInfo ).forEach( addStation );
+            }
+            $list.removeClass( "loading" );
+
+            function addStation( info ){
+                $list.append( App.Station.getView( info ));
+            };
         };
     };
 

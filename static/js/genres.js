@@ -8,7 +8,7 @@
     /// Exports: ---------------------------------------------------------------
 
     App.Genres = {
-        genres:     genres,
+        getGenres:  getGenres,
         getView:    getView,
     };
 
@@ -24,6 +24,21 @@
 
         App.Db.stations.list( null, null, _.compose( refillView, addGenres ));
     };
+
+    function getView() {
+
+        if ( !$view ) {
+            $view = $( "#search-genre" );
+        }
+        
+        return $view;
+    };
+
+    function getGenres() {
+        
+        return genres;
+    };
+
 
     function addGenres( err, stations ) {
 
@@ -61,20 +76,11 @@
     };
 
 
-    function getView() {
-
-        if ( !$view ) {
-            $view = $( "#search-genre" );
-        }
-        
-        return $view;
-    };
-
-
     function refillView( genres ) {
 
-        $view.html( '<option>All</option>' );
+        $view.html( '<option value="">All genres</option>' );
         _.forEach( genres.slice( 0, 100 ), appendGenre );
+        $view.removeAttr( "disabled" );
         return $view;
 
         function appendGenre( genre ) {
@@ -83,7 +89,7 @@
     };
 
     function getGenreView( genre ) {
-        var html = [ '<option><b>' ];
+        var html = [ '<option value="', genre[0], '"><b>' ];
         html.push( genre[0] );
         genre[1] ? html.push( ':</b> ', genre[1] ) : html.push( '</b>' );
         html.push( '</option>' );

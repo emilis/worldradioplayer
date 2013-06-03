@@ -6,8 +6,7 @@ ul.loading,ol.loading{background-image:url(/static/img/gaia/activity.png);backgr
 #player{position:fixed;left:0;right:0;top:0;height:10rem;padding:0 1rem;background-color:#000000;}#player>p{line-height:2rem;}
 #player>.control{text-align:center;}
 #explorer{position:fixed;left:0;right:0;top:10rem;bottom:0;height:auto;}#explorer>li>.tabpanel{background-color:#191e21;}
-#search-form label{display:block;}#search-form label>span{display:inline-block;padding:0 1rem;width:3em;}
-#search-form label>input,#search-form label select{width:10em;}
+#search-form{padding:1rem;border-bottom:0.1rem solid #222b2d;}#search-form label{display:block;}#search-form label>input,#search-form label>select{box-sizing:border-box;-moz-box-sizing:border-box;width:100%;}
 .station-list{list-style:none;display:block;padding:0;margin:0;}.station-list>li{list-style:none;display:block;padding:0;margin:0;}
 .station-list>.station{padding:1rem;min-height:4rem;overflow:hidden;border-bottom:0.1rem solid #222b2d;}.station-list>.station.playing{background-color:#124e59;}
 .station-list>.station>.buttons{float:right;text-align:right;}

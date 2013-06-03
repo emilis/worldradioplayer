@@ -39,15 +39,16 @@
 
 #search-form {
 
+    padding:            1rem;
+    border-bottom:      0.1rem solid @border;
+
     label {
         display:        block;
-        > span {
-            display:    inline-block;
-            padding:    0 1rem;
-            width:      3em;
-        }
-        > input, select {
-            width:      10em;
+        > input,
+        > select {
+            box-sizing:         border-box;
+            -moz-box-sizing:    border-box;
+            width:              100%;
         }
     }
 };
