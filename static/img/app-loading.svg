@@ -309,38 +309,6 @@
        id="linearGradient3370"
        xlink:href="#linearGradient3957"
        inkscape:collect="always" />
-    <filter
-       id="filter3533"
-       inkscape:label="Glow"
-       inkscape:menu="Shadows and Glows"
-       inkscape:menu-tooltip="Glow of object's own color at the edges"
-       color-interpolation-filters="sRGB">
-      <feGaussianBlur
-         id="feGaussianBlur3535"
-         stdDeviation="5"
-         result="result91" />
-      <feComposite
-         id="feComposite3537"
-         in2="result91"
-         in="SourceGraphic"
-         operator="over" />
-    </filter>
-    <filter
-       id="filter3539"
-       inkscape:label="Glow"
-       inkscape:menu="Shadows and Glows"
-       inkscape:menu-tooltip="Glow of object's own color at the edges"
-       color-interpolation-filters="sRGB">
-      <feGaussianBlur
-         id="feGaussianBlur3541"
-         stdDeviation="5"
-         result="result91" />
-      <feComposite
-         id="feComposite3543"
-         in2="result91"
-         in="SourceGraphic"
-         operator="over" />
-    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -376,7 +344,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -393,7 +360,7 @@
        sodipodi:cy="56.485737"
        sodipodi:cx="193.56345"
        id="path3523"
-       style="fill:url(#linearGradient3370);fill-opacity:1;stroke:none;display:inline;filter:url(#filter3533)"
+       style="fill:url(#linearGradient3370);fill-opacity:1;stroke:none;display:inline;"
        sodipodi:type="arc" />
     <path
        inkscape:connector-curvature="0"
@@ -437,7 +404,7 @@
        transform="matrix(3.1532979,0,0,3.1532979,177.97395,752.57598)" />
     <text
        xml:space="preserve"
-       style="font-size:21.44113541000000112px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:url(#linearGradient4013);fill-opacity:1;stroke:none;display:inline;font-family:Roboto;-inkscape-font-specification:Roboto Medium;filter:url(#filter3539)"
+       style="font-size:21.44113541000000112px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:url(#linearGradient4013);fill-opacity:1;stroke:none;display:inline;font-family:Roboto;-inkscape-font-specification:Roboto Medium"
        x="28.833189"
        y="1025.1865"
        id="text3285"
@@ -446,7 +413,7 @@
          sodipodi:role="line"
          x="28.833191"
          y="1025.1865"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:url(#linearGradient4013);fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans Bold;"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;fill:url(#linearGradient4013);fill-opacity:1;stroke:none;font-family:Roboto;-inkscape-font-specification:Roboto Medium"
          id="tspan3289">Loading</tspan></text>
   </g>
 </svg>
