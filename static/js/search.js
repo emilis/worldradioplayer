@@ -1,5 +1,9 @@
 ;(function( _, $, App ){
 
+    /// Constants: -------------------------------------------------------------
+
+    var NO_RESULTS = '<li class="warning">No stations found matching your criteria. Please change your search parameters and try again.</li>';
+
     /// Variables: -------------------------------------------------------------
 
     var $form;
@@ -23,7 +27,7 @@
     function init() {
 
         $form =     $( "#search-form" );
-        $results =  $( "#search-results" );
+        $results =  $( "#search-results" ).append( stationList.getView() );
 
         $form.on( "change", "select", onChangeTh );
         $form.on( "keydown", "input", onChangeTh );
@@ -66,13 +70,10 @@
 
     function updateResults( err, results ) {
 
-        if ( err ) {
-            $results.html( "Error while searching stations." );
-        } else if ( !results || !results.length ) {
-            $results.html( "No stations found matching your criteria. Please change your search parameters and try again." );
+        if ( !err && ( !results || !results.length )) {
+            stationList.getView().html( NO_RESULTS );
         } else {
-            $results.html( "" ).append( stationList.getView() );
-            stationList.update( null, results );
+            stationList.update( err, results );
         }
     };
 
