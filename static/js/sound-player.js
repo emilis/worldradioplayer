@@ -102,6 +102,7 @@
 
     function isStreamSupported( stream ) {
 
+        /*
         var supported = {
             "wav":              true,
             "ogg":              true,
@@ -114,24 +115,28 @@
         }
 
         return !! supported[ stream.type ];
-        /*
+        /* */
         switch ( stream.type ) {
             case "ogg":
+            case "application/ogg":
                 return buzz.isOGGSupported();
                 break;
             case "wav":
                 return buzz.isWAVSupported();
                 break;
             case "mp3":
+            case "audio/mpeg":
                 return buzz.isMP3Supported();
                 break;
             case "aac":
+            case "audio/aac":
+            case "audio/aacp":
                 return buzz.isAACSupported();
                 break;
             default:
                 return false;
         }
-        */
+        // */
     };
 
     function isStationSupported( station ) {

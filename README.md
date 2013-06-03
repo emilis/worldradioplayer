@@ -15,7 +15,8 @@ $ make zip
 
 ## Known issues / roadmap
 
-- Only OGG streams are supported at the moment.
+- ~~Only OGG streams are supported at the moment.~~
+- Operations involving IndexedDB tage ages...
 - Stream download is not stopped when station is stopped.
 - ~~Playback may stop when song changes.~~
 - Playback interruptions due to new metadata are not handled properly and may cause problems when switching playing stations.
