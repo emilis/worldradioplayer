@@ -2,12 +2,17 @@ body{margin:0;padding:0;background-color:#000000;color:#eaeff2;font-family:Robot
 div,p,button,input,select,th,td{font-size:1.6rem;}
 button{padding:0.8rem 1.1rem;color:#000000;}button.disabled{color:#909498;}
 input,select{padding:0.8rem;}
+.error{color:#b90000;}
+.warning{color:#ff4e00;}
+.important{color:#00caf2;}
 ul.loading,ol.loading{background-image:url(/static/img/gaia/activity.png);background-repeat:repeat-x;background-size:auto 3px;background-position:top left;animation:0.5s move infinite steps(15);}
 #player{position:fixed;left:0;right:0;top:0;height:10rem;padding:0 1rem;background-color:#000000;}#player>p{line-height:2rem;}
 #player>.control{text-align:center;}
 #explorer{position:fixed;left:0;right:0;top:10rem;bottom:0;height:auto;}#explorer>li>.tabpanel{background-color:#191e21;}
 #search-form{padding:1rem;border-bottom:0.1rem solid #222b2d;}#search-form label{display:block;}#search-form label>input,#search-form label>select{box-sizing:border-box;-moz-box-sizing:border-box;width:100%;}
 .station-list{list-style:none;display:block;padding:0;margin:0;}.station-list>li{list-style:none;display:block;padding:0;margin:0;}
+.station-list>li{padding:1rem;min-height:4rem;overflow:hidden;border-bottom:0.1rem solid #222b2d;}
+.station-list>.error,.station-list>.warning,.station-list>.info{text-align:center;}
 .station-list>.station{padding:1rem;min-height:4rem;overflow:hidden;border-bottom:0.1rem solid #222b2d;}.station-list>.station.playing{background-color:#124e59;}
 .station-list>.station>.buttons{float:right;text-align:right;}
 .station-list>.station>.info{margin:0 10rem 0 0;}.station-list>.station>.info>.name{display:block;font-weight:bold;}

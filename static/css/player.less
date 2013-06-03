@@ -56,6 +56,17 @@
 .station-list {
     .nolist();
 
+    > li {
+        padding:        1rem;
+        min-height:     4rem;
+        overflow:       hidden;
+        border-bottom:  0.1rem solid @border;
+    }
+    > .error,
+    > .warning,
+    > .info {
+        text-align:     center;
+    }
     > .station {
         padding:        1rem;
         min-height:     4rem;
