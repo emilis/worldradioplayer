@@ -33,7 +33,7 @@
 
     function show( name ) {
 
-        getTab( name ).show();
+        window.location.hash = "#"+name;
     };
 
     function getTab( name ) {
