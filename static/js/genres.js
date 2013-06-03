@@ -2,7 +2,8 @@
 
     /// Variables: -------------------------------------------------------------
 
-    var genres = [];
+    var genres =        [];
+    var station_count = 0;
     var $view;
 
     /// Exports: ---------------------------------------------------------------
@@ -22,7 +23,10 @@
 
         $view = getView();
 
-        App.Db.stations.list( null, null, _.compose( refillView, addGenres ));
+        App.Db.stations.list(
+            App.SoundPlayer.isStationSupported,
+            null,
+            _.compose( refillView, addGenres ));
     };
 
     function getView() {
@@ -45,6 +49,8 @@
         if ( err ) {
             return [];
         }
+
+        station_count = stations.length;
 
         var re = /\W+/g;
 
@@ -78,22 +84,23 @@
 
     function refillView( genres ) {
 
-        $view.html( '<option value="">All genres</option>' );
-        _.forEach( genres.slice( 0, 100 ), appendGenre );
-        $view.removeAttr( "disabled" );
-        return $view;
+        var html = _.flatten( [].concat(
+            ['<option value="">All genres (', station_count, ')</option>' ],
+            genres.slice( 0, 50 ).map( getGenreHtml )));
 
-        function appendGenre( genre ) {
-            $view.append( getGenreView( genre ));
-        };
+        return $view.html( html.join( "" )).removeAttr( "disabled" );
     };
 
-    function getGenreView( genre ) {
+    function getGenreHtml( genre ) {
         var html = [ '<option value="', genre[0], '"><b>' ];
         html.push( genre[0] );
         genre[1] ? html.push( ':</b> ', genre[1] ) : html.push( '</b>' );
         html.push( '</option>' );
-        return html.join( "" );
+        return html;
+    };
+
+    function getGenreView( genre ) {
+        return getGenreHtml( genre ).join( "" );
     };
 
 
