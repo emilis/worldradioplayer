@@ -3,6 +3,7 @@
     /// Variables: -------------------------------------------------------------
 
     var station_tpl;
+    var stations =      {};
 
     /// Exports: ---------------------------------------------------------------
 
@@ -26,9 +27,13 @@
 
     function fromInfo( info ) {
 
-        return {
-            info:   info,
-        };
+        if ( !stations[ info.name ] ) {
+            stations[ info.name ] = {
+                info:       info,
+                $views:     $( "empty-collection" ),
+            };
+        }
+        return stations[ info.name ];
     };
 
 
