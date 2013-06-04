@@ -10,12 +10,13 @@
     var $results;
     var stationList =   App.StationList();
     var stations =      App.Db.stations;
-    var onChangeTh =    _.throttle( onChange, 200 );
+    var onChangeTh =    _.throttle( onChange, 1000, { leading: false, trailing: true });
 
     /// Exports: ---------------------------------------------------------------
 
     App.Search = {
-        search: search,
+        getFilter:  getFilter,
+        search:     search,
     };
 
     /// Init: ------------------------------------------------------------------
@@ -54,17 +55,21 @@
 
     function getFilter( query, genre ) {
 
-        var qre = new RegExp( query, "i" );
-        var gre = new RegExp( genre, "i" );
+        //var qre = new RegExp( query, "i" );
+        //var gre = new RegExp( genre, "i" );
         
         return checkStation;
             
         function checkStation( station ) {
             var matched =   false;
-            matched =       !genre || ( genre && station.genre.match( gre ));
-            matched =       matched && ( station.name.match( qre ));
+            matched =       !genre || ( genre && testStr( station.genre, genre )); //station.genre.match( gre ));
+            matched =       matched && ( testStr( station.name, query )); //station.name.match( qre ));
             matched =       matched && App.SoundPlayer.isStationSupported( station );
             return matched;
+        };
+
+        function testStr( str, test ) {
+            return str.toLowerCase().replace(/\W+/g, " ").indexOf( test ) !== -1;
         };
     };
 

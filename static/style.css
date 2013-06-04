@@ -11,7 +11,7 @@ ul.loading,ol.loading{background-image:url(/static/img/gaia/activity.png);backgr
 #explorer{position:fixed;left:0;right:0;top:10rem;bottom:0;height:auto;}#explorer>li>.tabpanel{background-color:#191e21;}
 #explorer>li>.app-loading{background-image:url(/static/img/app-loading.svg);background-position:50% 50%;background-repeat:no-repeat;background-size:auto 60%;}
 #search-form{padding:1rem;border-bottom:0.1rem solid #222b2d;}#search-form label{display:block;}#search-form label>input,#search-form label>select{box-sizing:border-box;-moz-box-sizing:border-box;width:100%;}
-.station-list{list-style:none;display:block;padding:0;margin:0;}.station-list>li{list-style:none;display:block;padding:0;margin:0;}
+.station-list{list-style:none;display:block;padding:0;margin:0;padding:0.3rem 0 0;}.station-list>li{list-style:none;display:block;padding:0;margin:0;}
 .station-list>li{padding:1rem;min-height:4rem;overflow:hidden;border-bottom:0.1rem solid #222b2d;}
 .station-list>.error,.station-list>.warning,.station-list>.info{text-align:center;}
 .station-list>.station{padding:1rem;min-height:4rem;overflow:hidden;border-bottom:0.1rem solid #222b2d;}.station-list>.station.playing{background-color:#124e59;}
