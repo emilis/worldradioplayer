@@ -49,7 +49,7 @@
             station, {
                 last_played:    (new Date()).getTime(),
             },
-            App.LastPlayed.update );
+            !station.info.last_played && App.LastPlayed.update );
     };
 
     function pauseStation( station ) {
