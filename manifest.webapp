@@ -7,8 +7,10 @@
     "icons": {
         "30":           "/static/img/icons/30.png",
         "60":           "/static/img/icons/60.png",
-        "99":           "/static/img/icons/99.png",
-        "100":          "/static/img/icons/100.png",
+        "120":          "/static/img/icons/120.png",
+        "240":          "/static/img/icons/240.png",
+        "32":           "/static/img/icons/32.png",
+        "64":           "/static/img/icons/64.png",
         "128":          "/static/img/icons/128.png",
         "256":          "/static/img/icons/256.png"
     },
