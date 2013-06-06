@@ -23,6 +23,7 @@
             write:  write,
             remove: remove,
             list:   list,
+            count:  count,
         };
 
 
@@ -69,7 +70,7 @@
 
         function list( filter, options, cb ) {
 
-            var keys =  _.filter( Object.keys( LS ), tableKey );
+            var keys =  getKeys();
             var all =   [];
 
             for ( var i=0,len=keys.length; i<len; i++ ) {
@@ -80,6 +81,25 @@
             
             cb && cb( null, results );
             return results;
+        };
+
+        function count( filter, options, cb ) {
+
+            var count = 0;
+
+            if ( !filter && !options ) {
+                count = getKeys().length;
+            } else {
+                count = list( filter, options ).length;
+            }
+
+            cb && cb( null, count );
+            return count;
+        };
+
+        function getKeys() {
+
+            return _.filter( Object.keys( LS ), tableKey )
         };
 
         function tableKey( key ) {
