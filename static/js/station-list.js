@@ -9,6 +9,7 @@
     function createStationList() {
 
         var $view;
+        var update_count = 0;
 
         return {
             getView:        getView,
@@ -27,6 +28,7 @@
         function anounceUpdate() {
             
             getView().addClass( "loading" );
+            update_count++;
         };
 
 
@@ -42,7 +44,9 @@
                 $list.html( "" );
                 _( stations ).map( App.Station.fromInfo ).forEach( addStation );
             }
-            $list.removeClass( "loading" );
+
+            update_count--;
+            !update_count && $list.removeClass( "loading" );
 
             function addStation( info ){
                 $list.append( App.Station.getView( info ));
