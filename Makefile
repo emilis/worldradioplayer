@@ -1,13 +1,9 @@
-.PHONY:	default static zip
-
-### Vars -----------------------------------------------------------------------
-
-YAML2JSON=python -c "import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)"
+.PHONY:	default static zip data build-tools xml2json
 
 
 ### Main -----------------------------------------------------------------------
 
-default: static
+default: static data
 
 
 ### Application.zip: -----------------------------------------------------------
@@ -40,4 +36,26 @@ static/style.css: \
 static/css/*.less
 	lessc -x static/css/style.less $@
 
+### Data: ----------------------------------------------------------------------
 
+data: \
+static/data \
+static/data/dir.xiph.org.yp.json
+
+static/data:
+	mkdir -p static/data
+
+static/data/dir.xiph.org.yp.json: \
+static/data/dir.xiph.org.yp.xml
+	cat "$<" | xml2json > "$@"
+
+static/data/dir.xiph.org.yp.xml:
+	curl 'http://dir.xiph.org/yp.xml' > "$@"
+
+### Prerequisites: -------------------------------------------------------------
+
+build-tools: \
+xml2json
+
+xml2json:
+	npm install -g 'git://github.com/buglabs/node-xml2json.git'
