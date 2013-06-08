@@ -24,6 +24,7 @@
             remove: remove,
             list:   list,
             count:  count,
+            clear:  clear,
         };
 
 
@@ -95,6 +96,18 @@
 
             cb && cb( null, count );
             return count;
+        };
+
+        function clear( cb ) {
+            
+            try {
+                getKeys().map( function( k ){ LS.removeItem( k )});
+                cb && cb( null, true );
+                return true;
+            } catch ( e ) {
+                cb && cb( e );
+                return false;
+            }
         };
 
         function getKeys() {
