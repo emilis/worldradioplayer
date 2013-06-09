@@ -16,6 +16,7 @@
      */
     var App = window.App = {
         debug:          debug,
+        DEBUG:          DEBUG,
         LABEL_PLAY:     LABEL_PLAY,
         LABEL_PAUSE:    LABEL_PAUSE,
         LABEL_STOP:     LABEL_STOP,
