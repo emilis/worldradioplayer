@@ -55,6 +55,7 @@
             if ( err || !results || !results.length ) {
                 cb && cb( err, results );
             } else {
+                results = _.sortBy( results, "last_time" ).reverse();
                 async.mapSeries( results, readStation, cb );
             }
             function readStation( lastRecord, recordCb ) {
@@ -67,7 +68,7 @@
 
         var info =  station.info || station;
         var _id =   info.name;
-        last.read( station.name, onRead );
+        last.read( _id, onRead );
 
         function onRead( err, record ) {
             record =            record || {};
