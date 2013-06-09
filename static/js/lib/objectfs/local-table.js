@@ -19,12 +19,13 @@
         name = "---" + name + "---";
 
         return {
-            read:   read,
-            write:  write,
-            remove: remove,
-            list:   list,
-            count:  count,
-            clear:  clear,
+            read:       read,
+            write:      write,
+            remove:     remove,
+            list:       list,
+            count:      count,
+            clear:      clear,
+            toObject:   toObject,
         };
 
 
@@ -110,6 +111,20 @@
                 cb && cb( e );
                 return false;
             }
+        };
+
+        function toObject( cb ) {
+            
+            var result = getKeys().reduce( addRecord, {} );
+            cb && cb( null, result );
+            return result;
+
+            function addRecord( obj, key ) {
+                if ( key && key.replace ) {
+                    obj[ key.replace( name, "" )] = JSON.parse( LS[key] );
+                }
+                return obj;
+            };
         };
 
         function getKeys() {
