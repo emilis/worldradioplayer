@@ -16,6 +16,8 @@
             write:      wrapFunction( write ),
             remove:     wrapFunction( remove ),
             list:       wrapFunction( list ),
+            listIds:    wrapFunction( listIds ),
+            listByIds:  wrapFunction( listByIds ),
             count:      wrapFunction( count ),
             toObject:   wrapFunction( toObject ),
         };
@@ -82,6 +84,20 @@
         } catch ( e ) {
             cb && cb( e, results );
         }
+    };
+
+    function listIds( cb ) {
+        
+        var results = _.keys( this );
+        cb && cb( null, results );
+        return results;
+    };
+
+    function listByIds( ids, cb ) {
+
+        var results = _.at( this, ids );
+        cb && cb( null, results );
+        return results;
     };
 
     function count( filter, options, cb ) {

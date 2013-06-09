@@ -23,6 +23,7 @@
             write:      write,
             remove:     remove,
             list:       list,
+            listIds:    listIds,
             listByIds:  listByIds,
             count:      count,
             clear:      clear,
@@ -37,6 +38,13 @@
 
 
         function read( id, cb ) {
+            if ( !id ) {
+                if ( _.isFunction( cb )) {
+                    cb( Error( "ObjectFsLocalTable.read() needs a non-empty id." ));
+                } else {
+                    throw Error( "ObjectFsLocalTable.read() needs a non-empty id." );
+                }
+            }
             id = getId( id );
 
             var record = LS[ id ];
@@ -88,9 +96,16 @@
             return results;
         };
 
+        function listIds( cb ) {
+
+            var results = getKeys().map( toPublicId );
+            cb && cb( null, results);
+            return results;
+        }
+
         function listByIds( ids, cb ) {
 
-            var results = _( ids ).map( read ).value();
+            var results = _( ids ).map( read ).filter().value();
             cb && cb( null, results );
             return results;
         };
@@ -142,6 +157,14 @@
 
         function tableKey( key ) {
             return key.indexOf( name ) === 0;
+        };
+
+        function toPublicId( id ) {
+            if ( id.indexOf( name )){
+                return id;
+            } else {
+                return id.substr( name.length );
+            }
         };
     };
 
