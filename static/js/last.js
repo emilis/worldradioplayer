@@ -1,15 +1,17 @@
-;(function( _, $, App ){
+;(function( _, async, $, App ){
 
     /// Variables: -------------------------------------------------------------
 
     var $view;
-    var stations =      App.Db.stations;
+    var last =          App.Db.last;
     var stationList =   App.StationList();
 
     /// Exports: ---------------------------------------------------------------
 
     App.LastPlayed = {
-        update:     update,
+        updateView:     updateView,
+        listStations:   listStations,
+        updateStation:  updateStation,
     };
 
     /// Init: ------------------------------------------------------------------
@@ -23,26 +25,63 @@
         $view = $( "#last > .tabpanel" );
         $view.html( "" ).append( stationList.getView() );
 
-        update( switchToSearch );
+        updateView( switchToSearch );
 
         function switchToSearch( err, results ) {
+            console.log( "switchToSearch", err, results && results.length );
             $view.removeClass( "app-loading" );
             ( err || !results || !results.length ) && App.Explorer.show( "search" );
         }
     };
 
-    function update( cb ) {
+    function updateView( cb ) {
 
         stationList.anounceUpdate();
+        listStations( null, { limit: 10 }, onStations );
 
-        stations.list(
-            lastFilter,
-            { limit: 10 },
-            onUpdate );
+        function onStations( err, stations ) {
+            console.log( "onStations", err, stations );
 
-        function onUpdate( err, results ) {
-            stationList.update( err, results );
-            cb && cb( err, results );
+            stationList.update( err, stations );
+            cb && cb( err, stations );
+        };
+    };
+
+    function listStations( filter, options, cb ) {
+
+        last.list( null, options, onList );
+
+        function onList( err, results ) {
+            if ( err || !results || !results.length ) {
+                cb && cb( err, results );
+            } else {
+                async.mapSeries( results, readStation, cb );
+            }
+            function readStation( lastRecord, recordCb ) {
+                App.Db.stations.read( lastRecord._id, recordCb );
+            };
+        };
+    };
+
+    function updateStation( station, cb ) {
+
+        var info =  station.info || station;
+        var _id =   info.name;
+        last.read( station.name, onRead );
+
+        function onRead( err, record ) {
+            record =            record || {};
+            record._id =        _id;
+            var new_station =   !record.last_time;
+            record.last_time =  (new Date()).getTime();
+            record.times =      record.times || 0;
+            record.times +=     1;
+            last.write( _id, record, onWrite );
+
+            function onWrite( err, result ) {
+                cb && cb( err, result );
+                new_station && updateView();
+            };
         };
     };
 
@@ -51,4 +90,4 @@
         return station.last_played && App.SoundPlayer.isStationSupported( station );
     };
 
-})( window._, window.$, window.App );
+})( window._, window.async, window.$, window.App );

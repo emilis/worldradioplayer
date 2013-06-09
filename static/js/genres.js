@@ -1,15 +1,16 @@
 ;(function( _, App ){
 
+    /// Constants: -------------------------------------------------------------
+
+    var TOP_COUNT = 50;
+
     /// Variables: -------------------------------------------------------------
 
-    var genres =        [];
-    var station_count = 0;
     var $view;
 
     /// Exports: ---------------------------------------------------------------
 
     App.Genres = {
-        getGenres:  getGenres,
         getView:    getView,
     };
 
@@ -21,12 +22,7 @@
 
     function init() {
 
-        $view = getView();
-
-        App.Db.stations.list(
-            App.SoundPlayer.isStationSupported,
-            null,
-            _.compose( refillView, addGenres ));
+        App.Db.genres.toObject( refillView );
     };
 
     function getView() {
@@ -38,60 +34,29 @@
         return $view;
     };
 
-    function getGenres() {
-        
-        return genres;
-    };
+    function refillView( err, genres ) {
 
+        var sorted = _( genres ).map( getCount ).sortBy( 1 ).value().reverse().slice( 0 , TOP_COUNT );
 
-    function addGenres( err, stations ) {
+        var html = _.flatten([
+            '<option value="">All genres</option>',
+            sorted.map( getGenreHtml )
+            ]);
 
-        if ( err ) {
-            return [];
-        }
+        return getView().html( html.join( "" )).removeAttr( "disabled" );
 
-        station_count = stations.length;
-
-        var re = /\W+/g;
-
-        genres = _( stations.reduce( getMap, {} ))
-                .pairs()
-                .sortBy( 1 )
-                .reverse()
-                .value();
-        App.Genres.genres = genres;
-
-        return genres;
-
-        function getMap( gmap, station ) {
-            if ( station.genre ) {
-                _( station.genre.split( re ))
-                    .compact()
-                    .map( simplifyString )
-                    .uniq()
-                    .forEach( addGenre );
+        function getCount( scores, name ) {
+            if ( !scores ) {
+                return [ name, 0 ];
+            } else {
+                return [ name, Object.keys( scores ).length ];
             }
-            return gmap;
-            function addGenre( genre ) {
-                gmap[ genre ] = gmap[ genre ] ? ( gmap[ genre ] + 1 ) : 1;
-            };
         };
-        function simplifyString( str ) {
-            return str.toLowerCase();
-        };
-    };
 
-
-    function refillView( genres ) {
-
-        var html = _.flatten( [].concat(
-            ['<option value="">All genres (', station_count, ')</option>' ],
-            genres.slice( 0, 50 ).map( getGenreHtml )));
-
-        return $view.html( html.join( "" )).removeAttr( "disabled" );
     };
 
     function getGenreHtml( genre ) {
+
         var html = [ '<option value="', genre[0], '"><b>' ];
         html.push( genre[0] );
         genre[1] ? html.push( ':</b> ', genre[1] ) : html.push( '</b>' );

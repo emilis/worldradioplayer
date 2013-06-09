@@ -45,11 +45,7 @@
         App.Player.showStation( station );
         pstation && App.Station.updateViews( pstation );
         App.Station.updateViews( station );
-        App.Station.updateInfo(
-            station, {
-                last_played:    (new Date()).getTime(),
-            },
-            !station.info.last_played && App.LastPlayed.update );
+        App.LastPlayed.updateStation( station );
     };
 
     function pauseStation( station ) {
