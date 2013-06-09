@@ -25,12 +25,17 @@
         $view = $( "#last > .tabpanel" );
         $view.html( "" ).append( stationList.getView() );
 
-        updateView( switchToSearch );
+        updateView( onLoad );
 
-        function switchToSearch( err, results ) {
-            console.log( "switchToSearch", err, results && results.length );
+        function onLoad( err, results ) {
+            App.debug( "switchToSearch", err, results && results.length );
+
             $view.removeClass( "app-loading" );
-            ( err || !results || !results.length ) && App.Explorer.show( "search" );
+            if ( err || !results || !results.length ) {
+                App.Explorer.show( "search" );
+            } else {
+                App.AppController.playStation( App.Station.fromInfo( results[0] ));
+            }
         }
     };
 
