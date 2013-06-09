@@ -14,6 +14,7 @@
         return {
             getView:        getView,
             anounceUpdate:  anounceUpdate,
+            endUpdate:      endUpdate,
             update:         update,
         };
         
@@ -31,6 +32,11 @@
             update_count++;
         };
 
+        function endUpdate() {
+            update_count--;
+            !update_count && getView().removeClass( "loading" );
+        };
+
 
         function update( err, stations ) {
 
@@ -45,8 +51,7 @@
                 _( stations ).map( App.Station.fromInfo ).forEach( addStation );
             }
 
-            update_count--;
-            !update_count && $list.removeClass( "loading" );
+            endUpdate();
 
             function addStation( info ){
                 $list.append( App.Station.getView( info ));

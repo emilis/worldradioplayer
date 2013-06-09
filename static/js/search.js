@@ -91,6 +91,7 @@
 
         if ( !err && ( !results || !results.length )) {
             stationList.getView().html( NO_RESULTS );
+            stationList.endUpdate();
         } else {
             stationList.update( err, results.slice( 0, 20 ));
         }
