@@ -77,7 +77,7 @@
     };
 
     function getSound( station ) {
-        App.debug( "Player", "getSound", station );
+        App.debug( "Player", "getSound", station.info );
 
         var streams = _.filter( station.info.streams, isStreamSupported );
         if ( streams && streams.length ) {
