@@ -903,7 +903,7 @@
 
     function colorString(str, style) {
 
-        if (process.env.COLORTERM) {
+        if ( typeof(process) !== "undefined" && process && process.env && process.env.COLORTERM ) {
             return colors[style] + str + colors["reset"];
         } else {
             return str;
