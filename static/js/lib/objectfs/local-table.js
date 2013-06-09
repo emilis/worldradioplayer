@@ -38,10 +38,12 @@
             id = getId( id );
 
             var record = LS[ id ];
-            if ( record &&  record.length ) {
+            if ( record === undefined ) {
+                cb && cb( "Not found.", record );
+            } else {
                 record = JSON.parse( record );
-            };
-            cb && cb( record !== undefined, record );
+                cb && cb( null, record );
+            }
             return record;
         };
 
