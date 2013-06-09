@@ -86,8 +86,8 @@
 
     function count( filter, options, cb ) {
 
-        this.list( filter, options, function( err, results ){
-            cb( err, results && results.count );
+        list.call( this, filter, options, function( err, results ){
+            cb( err, results && results.length );
         });
     };
 
