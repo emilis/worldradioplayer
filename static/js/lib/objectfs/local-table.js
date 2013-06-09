@@ -23,6 +23,7 @@
             write:      write,
             remove:     remove,
             list:       list,
+            listByIds:  listByIds,
             count:      count,
             clear:      clear,
             toObject:   toObject,
@@ -40,10 +41,10 @@
 
             var record = LS[ id ];
             if ( record === undefined ) {
-                cb && cb( "Not found.", record );
+                _.isFunction( cb ) && cb( "Not found.", record );
             } else {
                 record = JSON.parse( record );
-                cb && cb( null, record );
+                _.isFunction( cb ) && cb( null, record );
             }
             return record;
         };
@@ -83,6 +84,13 @@
 
             var results = ObjectFsUtils.filterItems( all, filter, options );
             
+            cb && cb( null, results );
+            return results;
+        };
+
+        function listByIds( ids, cb ) {
+
+            var results = _( ids ).map( read ).value();
             cb && cb( null, results );
             return results;
         };
