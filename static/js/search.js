@@ -9,13 +9,15 @@
     var $form;
     var $results;
     var stationList =   App.StationList();
+    var genres =        App.Db.genres;
+    var words =         App.Db.words;
     var stations =      App.Db.stations;
+    var X =             window.goodJob;
     var onChangeTh =    _.throttle( onChange, 1000, { leading: false, trailing: true });
 
     /// Exports: ---------------------------------------------------------------
 
     App.Search = {
-        getFilter:  getFilter,
         search:     search,
     };
 
@@ -44,32 +46,44 @@
     };
 
     function search( query, genre ) {
+        App.debug( "search", query, genre );
 
         stationList.anounceUpdate();
 
-        stations.list(
-            getFilter( query, genre ),
-            { limit: 20 },
-            updateResults );
-    };
+        if ( !query && !genre ) {
+            updateResults( null, [] );
+            return;
+        } else {
+            X.run({
+                genre:      X.call( okCb( genres.read, {}), genre ),
+                word:       X.call( okCb( words.read, {}), query ),
+                ids:        X.callSync( getIds, genre && X.get( "genre" ), query && X.get( "word" )),
+                stations:   X.call( stations.listByIds, X.get( "ids" )),
+                update:     X.call( updateResults, null, X.get( "stations" )),
+            });
+        }
 
-    function getFilter( query, genre ) {
+        function getIds( genre, word ) {
+           
+            var no_genre =  _.isEmpty( genre );
+            var no_word =   _.isEmpty( word );
+            App.debug( "search/getIds", no_genre, genre, no_word, word );
 
-        //var qre = new RegExp( query, "i" );
-        //var gre = new RegExp( genre, "i" );
-        
-        return checkStation;
-            
-        function checkStation( station ) {
-            var matched =   false;
-            matched =       !genre || ( genre && testStr( station.genre, genre )); //station.genre.match( gre ));
-            matched =       matched && ( testStr( station.name, query )); //station.name.match( qre ));
-            matched =       matched && App.SoundPlayer.isStationSupported( station );
-            return matched;
-        };
+            if ( no_genre && no_word ) {
+                return [];
+            } else if ( no_word ) {
+                return _( genre ).pairs().sortBy( 1 ).pluck( 0 ).value().reverse();
+            } else if ( no_genre ) {
+                return _( word ).pairs().sortBy( 1 ).pluck( 0 ).value().reverse();
+            } else {
+                var ids = _.intersection( _.keys( genre ), _.keys( word ));
+                App.debug( "search/getIds/both", ids );
+                return _.sortBy( ids, countScore ).reverse();
+            }
 
-        function testStr( str, test ) {
-            return str.toLowerCase().replace(/\W+/g, " ").indexOf( test ) !== -1;
+            function countScore( id ) {
+                return word[id] + ( 0.1 * genre[id] );
+            };
         };
     };
 
@@ -78,8 +92,26 @@
         if ( !err && ( !results || !results.length )) {
             stationList.getView().html( NO_RESULTS );
         } else {
-            stationList.update( err, results );
+            stationList.update( err, results.slice( 0, 20 ));
         }
     };
+
+    /// Utilities: -------------------------------------------------------------
+
+    function okCb( fn, default_value ) {
+        return function() {
+
+            var args =  _.toArray( arguments );
+            var cb =    args.pop();
+            args.push( onFn );
+            
+            fn.apply( null, args );
+            
+            function onFn( err, result ) {
+                cb( null, result || default_value );
+            };
+        };
+    };
+
 
 })( window._, window.$, window.App );
