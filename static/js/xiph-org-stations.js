@@ -7,7 +7,7 @@
     /// Exports: ---------------------------------------------------------------
 
     App.XiphOrgStations = ObjectFsWithCached(
-        ObjectFsAsyncObject
+        ObjectFsAsyncObject,
         loadStations );
 
     /// Functions: -------------------------------------------------------------
