@@ -47,7 +47,7 @@
             }
             id = getId( id );
 
-            var record = LS[ id ];
+            var record = LS.getItem( id );
             if ( record === undefined ) {
                 _.isFunction( cb ) && cb( "Not found.", record );
             } else {
@@ -62,7 +62,7 @@
             id = getId( id );
 
             try {
-                LS[ id ] = JSON.stringify( record );
+                LS.setItem( id, JSON.stringify( record ));
                 cb && cb( null, id );
                 return id;
             } catch ( e ) {
@@ -75,7 +75,7 @@
         function remove( id, cb ) {
             id = getId( id );
 
-            var exists = LS[ id ] !== undefined;
+            var exists = ( LS.getItem( id ) !== undefined );
             LS.removeItem( id );
             cb && cb( null, exists );
             return exists;
@@ -87,7 +87,7 @@
             var all =   [];
 
             for ( var i=0,len=keys.length; i<len; i++ ) {
-                all.push( JSON.parse( LS[ keys[ i ]]));
+                all.push( JSON.parse( LS.getItem( keys[i] )));
             }
 
             var results = ObjectFsUtils.filterItems( all, filter, options );
@@ -144,7 +144,7 @@
 
             function addRecord( obj, key ) {
                 if ( key && key.replace ) {
-                    obj[ key.replace( name, "" )] = JSON.parse( LS[key] );
+                    obj[ key.replace( name, "" )] = JSON.parse( LS.getItem( key ));
                 }
                 return obj;
             };
