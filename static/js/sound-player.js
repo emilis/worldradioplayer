@@ -48,7 +48,7 @@
         currentStation && currentStation.playing && stop();
 
         currentStation = station || currentStation;
-        currentStation.sound = currentStation.sound || getSound( currentStation );
+        currentStation.sound = getSound( currentStation );
         if ( currentStation.sound ) {
             currentStation.sound.load().play();
             currentStation.playing = true;
@@ -65,6 +65,8 @@
         App.debug( "Player", "stop" );
 
         currentStation.sound.stop();
+        currentStation.sound.sound.src = "";
+        delete currentStation.sound;
         currentStation.playing = false;
         currentStation = null;
     };
@@ -73,6 +75,8 @@
         App.debug( "Player", "pause" );
 
         currentStation.sound.stop();
+        currentStation.sound.sound.src = "";
+        delete currentStation.sound;
         currentStation.playing = false;
     };
 
