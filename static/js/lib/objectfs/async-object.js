@@ -25,7 +25,7 @@
         function wrapFunction( fn ) {
             return function() {
                 
-                var args = arguments;
+                var args = _.toArray( arguments );
                 withObject( callFn );
                 
                 function callFn( err, dataObject ) {
@@ -42,6 +42,14 @@
     };
 
     function read( id, cb ) {
+        if ( !id ) {
+            if ( _.isFunction( cb )) {
+                cb( Error( "ObjectFsAsyncObject.read() requires a non-empty id." ));
+            } else {
+                throw Error( "ObjectFsAsyncObject.read() requires a non-empty id." );
+            }
+            return false;
+        }
 
         var record = this[ id ];
         if ( record !== undefined ) {

@@ -29,6 +29,7 @@
                 words:      targetWrapper( "words" ),
             });
         } else {
+            localStorage.clear();
             return _.extend( exports, importData() );
         }
     };
@@ -53,7 +54,7 @@
 
     function stationsToGenres( genres, station ) {
         
-        _.forEach( getWordScores( station.genre ), addGenre );
+        _.isString( station.genre ) && _.forEach( getWordScores( station.genre ), addGenre );
         return genres;
 
         function addGenre( score, name ) {
@@ -64,7 +65,7 @@
 
     function stationsToWords( words, station ) {
 
-        _.forEach( getWordScores( station.name), addWord );
+        _.isString( station.name ) && _.forEach( getWordScores( station.name ), addWord );
         return words;
 
         function addWord( score, name ) {
@@ -74,6 +75,9 @@
     };
 
     function getWordScores( str ) {
+        if ( !_.isString( str )) {
+            return {};
+        }
 
         str =           str.toLowerCase();
         var len =       str.length;
@@ -106,19 +110,24 @@
                 if ( !err ) {
                     var target = targetWrapper( name );
                     target.clear();
-                    _.forEach( obj, saveRecord );
+                    try {
+                        _.forEach( obj, saveRecord );
+                    } catch ( e ) {
+                        console.error( e, e.toString() );
+                    }
                     left -= 1;
                     !left && importDone();
                 }
                 
                 function saveRecord( value, key ) {
-                    target.write( key, value );
+                    key && target.write( key, value );
                 };
             };
         };
     };
 
     function importDone() {
+        App.debug( "importDone" );
         
         App.Db.settings.write( IMPORTED, true );
     };

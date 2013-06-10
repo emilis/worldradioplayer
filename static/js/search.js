@@ -69,7 +69,7 @@
                     stations:   X.call( stations.listByIds, X.get( "ids" )),
                 }, function( e, r ){
                 
-                    e && console.error( e, r );   
+                    e && console.error( JSON.stringify(e), e.error.toString(), JSON.stringify(Object.keys(r)) );   
                     updateResults( e, r.stations );
                 });
         }
@@ -121,10 +121,10 @@
                 log:        App.DEBUG,
                 timeout:    8096
             }), {
-                wscores:    X.call( words.listByIds, qwords),
-                gscores:    X.call( genres.listByIds, qwords),
+                wscores:    X.call( words.listByIds, qwords ),
+                gscores:    X.call( genres.listByIds, qwords ),
                 awords:     X.call( words.listIds ),
-                mwords:     X.callSync( filterWords, qwords, X.get( "awords")),
+                mwords:     X.callSync( filterWords, qwords, X.get( "awords" )),
                 mwscores:   X.call( words.listByIds, X.get( "mwords" )),
                 agenres:    X.call( genres.listIds ),
                 mgenres:    X.callSync( filterWords, qwords, X.get( "agenres" )),
@@ -138,7 +138,7 @@
             }, function( e, r ) {
             
                 App.debug( "getKeywords/job-done", e, Object.keys( r ));
-                e && console.error( e );
+                e && console.error( JSON.stringify(e), e.error.toString(), JSON.stringify(Object.keys(r)) );
                 cb( e, r.keywords );
             });
 
@@ -149,15 +149,17 @@
                 mwords:     toObject( mwords ), //_.extend.apply( _, mwords.reverse() ),
                 mgenres:    toObject( mgenres ),
             };
-            App.debug( "getKeywords/combineResults", result );
+            App.debug( "getKeywords/combineResults", JSON.stringify( result ));
             return result;
 
             function toObject( arr ) {
-                if ( _.isArray( arr ) && arr.length ) {
-                    return _.extend.apply( _, arr.reverse() );
-                } else {
-                    return {};
+                if ( _.isArray( arr )) {
+                    arr = _.filter( arr ).reverse();
+                    if ( arr.length ) {
+                        return _.extend.apply( _, arr );
+                    }
                 }
+                return {};
             };
         };
     };
