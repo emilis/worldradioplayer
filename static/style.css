@@ -7,7 +7,8 @@ input,select{padding:0.8rem;}
 .important{color:#00caf2;}
 ul.loading,ol.loading{background-image:url(/static/img/gaia/activity.png);background-repeat:repeat-x;background-size:auto 3px;background-position:top left;animation:0.5s move infinite steps(15);}
 #player{position:fixed;left:0;right:0;top:0;height:10rem;padding:0 1rem;background-color:#000000;}#player>p{line-height:2rem;}
-#player>.control{text-align:center;}#player>.control>.play{padding:0.8rem 2.9rem;}
+#player>.info{margin:1rem 0 0;height:4rem;overflow-y:hidden;}
+#player>.control{margin:0;text-align:center;}#player>.control>.play{padding:0.8rem 2.9rem;}
 #explorer{position:fixed;left:0;right:0;top:10rem;bottom:0;height:auto;}#explorer>li>.tabpanel{background-color:#191e21;}
 #explorer>li>.app-loading{background-image:url(/static/img/app-loading.svg);background-position:50% 50%;background-repeat:no-repeat;background-size:auto 60%;}
 #search-form{padding:1rem;border-bottom:0.1rem solid #222b2d;}#search-form label{display:block;}#search-form label>input,#search-form label>select{box-sizing:border-box;-moz-box-sizing:border-box;width:100%;}
