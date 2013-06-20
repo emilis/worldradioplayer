@@ -1,9 +1,13 @@
-.PHONY:	default static zip data build-tools xml2json
+.PHONY:	default clean static zip data build-tools xml2json
 
 
 ### Main -----------------------------------------------------------------------
 
 default: static data
+
+
+clean:
+	rm application.zip
 
 
 ### Application.zip: -----------------------------------------------------------
