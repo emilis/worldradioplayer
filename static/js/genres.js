@@ -59,7 +59,7 @@
 
         var html = [ '<option value="', genre[0], '"><b>' ];
         html.push( genre[0] );
-        genre[1] ? html.push( ':</b> ', genre[1] ) : html.push( '</b>' );
+        genre[1] ? html.push( '</b> (', genre[1], ' stations)' ) : html.push( '</b>' );
         html.push( '</option>' );
         return html;
     };
