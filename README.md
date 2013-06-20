@@ -1,12 +1,12 @@
 # <img src="https://raw.github.com/emilis/worldradioplayer/master/static/img/icons/60.png" align="right"> World Radio Player
 
-A player for Internet radio stations on Firefox OS.
-
-*Not published on the Marketplace yet.*
+A player for Internet radio stations on [Firefox OS][].
 
 ## Usage
 
-Push to your device via Firefox OS Simulator or run in the simulator itself.
+Install it from [![Firefox Marketplace][marketplace-logo]][marketplace-link]
+
+Or checkout this repository and install/use via the [Firefox OS Simulator][simulator].
 
 To create an `application.zip` file:
 ``` bash
@@ -33,8 +33,9 @@ $ make zip
 
 ### Thanks
 
-- Fabrice Desré <https://github.com/fabricedesre> for b2gremote and help with Firefox OS simulator.
-- Thomas B. Ruecker <https://github.com/dm8tbr> for getting the list of stations from <http://dir.xiph.org/>.
+- [Fabrice Desré][fabricedesre] for b2gremote and help with Firefox OS simulator.
+- [Thomas B. Ruecker][dm8tbr] for getting the list of stations from <http://dir.xiph.org/>.
+- [Marketplace Reviewers][] for reviewing the app before my presentation.
 
 ### License
 
@@ -53,3 +54,11 @@ $ make zip
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+[Firefox OS]: https://www.mozilla.org/en-US/firefox/partners/#os "Firefox OS"
+[marketplace-link]: https://marketplace.firefox.com/app/world-radio-player/ "World Radio Player"
+[marketplace-logo]: https://raw.github.com/emilis/worldradioplayer/master/static/img/marketplace-logo.png "Firefox Marketplace"
+[simulator]: https://addons.mozilla.org/en-US/firefox/addon/firefox-os-simulator/ "Firefox OS Simulator"
+[fabricedesre]: https://github.com/fabricedesre "Fabrice Desré"
+[dm8tbr]: https://github.com/dm8tbr "Thomas B. Ruecker"
+[Marketplace Reviewers]: https://wiki.mozilla.org/Marketplace/Reviewers "Marketplace Reviewers"
