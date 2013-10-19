@@ -1,7 +1,7 @@
 {
     "name":             "World Radio Player",
     "description":      "Internet radio player.",
-    "version":          "0.0.2",
+    "version":          "0.0.3",
     "type":             "web",
     "launch_path":      "/index.html",
     "permissions": {
