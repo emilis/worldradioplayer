@@ -86,6 +86,7 @@
         var streams = _.filter( station.info.streams, isStreamSupported );
         if ( streams && streams.length ) {
             var sound = new buzz.sound( streams[0].url, SOUND_OPT );
+            sound.sound.mozAudioChannelType = 'content';
             //sound.bind( "durationchange", reloadSound );
             sound.bind( "ended", reloadSound );
             //debugSound( sound );
