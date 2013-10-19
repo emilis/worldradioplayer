@@ -7,6 +7,8 @@ all: \
 30@2x.png \
 60.png \
 60@2x.png \
+90.png \
+90@2x.png \
 120.png \
 120@2x.png \
 240.png \
@@ -19,6 +21,8 @@ all: \
 30@2x.png:	icon.svg; $A60 $B60 $C
 60.png:		icon.svg; $A60 $B60 $C
 60@2x.png:	icon.svg; $A120 $B120 $C
+90.png:		icon.svg; $A90 $B90 $C
+90@2x.png:	icon.svg; $A180 $B180 $C
 120.png: 	icon.svg; $A120 $B120 $C
 120@2x.png:	icon.svg; $A240 $B240 $C
 240.png: 	icon.svg; $A240 $B240 $C

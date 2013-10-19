@@ -1,7 +1,7 @@
 {
     "name":             "World Radio Player",
     "description":      "Internet radio player.",
-    "version":          "0.0.3",
+    "version":          "0.0.4",
     "type":             "web",
     "launch_path":      "/index.html",
     "permissions": {
@@ -15,6 +15,7 @@
     "icons": {
         "30":           "/static/img/icons/30.png",
         "60":           "/static/img/icons/60.png",
+        "90":           "/static/img/icons/90.png",
         "120":          "/static/img/icons/120.png",
         "240":          "/static/img/icons/240.png",
         "32":           "/static/img/icons/32.png",
