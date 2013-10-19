@@ -19,7 +19,7 @@ $ make zip
 - ~~Operations involving IndexedDB tage ages...~~
 - ~~Stream download is not stopped when station is stopped.~~
 - ~~Playback may stop when song changes.~~
-- Playback stops but stream download continues when app is minimized.
+- ~~Playback stops but stream download continues when app is minimized.~~
 - Need to improve responsiveness on first app start.
 - Network status is not shown for playing station ( buffering/playing/etc. ).
 - Playback interruptions due to new metadata are not handled properly and may cause problems when switching playing stations.
