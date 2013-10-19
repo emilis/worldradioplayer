@@ -51,7 +51,7 @@ static/data:
 
 static/data/dir.xiph.org.yp.json: \
 static/data/dir.xiph.org.yp.xml
-	cat "$<" | xml2json > "$@"
+	cat "$<" | node xml2json > "$@"
 
 static/data/dir.xiph.org.yp.xml:
 	curl 'http://dir.xiph.org/yp.xml' > "$@"
