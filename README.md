@@ -6,7 +6,17 @@ A player for Internet radio stations on [Firefox OS][].
 
 Install it from [![Firefox Marketplace][marketplace-logo]][marketplace-link]
 
-Or checkout this repository and install/use via the [Firefox OS Simulator][simulator].
+### Development
+
+Checkout this repository and install/use via the [Firefox OS Simulator][simulator].
+
+You will need [Node.js][node] and a version of [Make][make] to build this app. Also lessc, curl and zip on the command line.
+
+To start developing, run:
+```bash
+$ make build-tools
+$ make
+```
 
 To create an `application.zip` file:
 ``` bash
@@ -27,9 +37,10 @@ $ make zip
 
 ## About
 
-### Author
+### Author, contributors
 
-- Emilis Dambauskas <emilis.d@gmail.com>.
+- **Emilis Dambauskas <emilis.d@gmail.com>.**
+- [Jerzy Kozera][jkozera].
 
 ### Thanks
 
@@ -62,3 +73,6 @@ $ make zip
 [fabricedesre]: https://github.com/fabricedesre "Fabrice Desré"
 [dm8tbr]: https://github.com/dm8tbr "Thomas B. Ruecker"
 [Marketplace Reviewers]: https://wiki.mozilla.org/Marketplace/Reviewers "Marketplace Reviewers"
+[jkozera]: https://github.com/jkozera "Jerzy Kozera"
+[node]: http://nodejs.org/ "Node.js"
+[make]: https://en.wikipedia.org/wiki/Make_%28software%29 "Make"
