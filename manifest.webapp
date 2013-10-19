@@ -7,6 +7,9 @@
     "permissions": {
         "audio-channel-normal": {
             "description":  "Needed for audio playback."
+        },
+        "audio-channel-content": {
+            "description":  "Needed for audio playback in background."
         }
     },
     "icons": {

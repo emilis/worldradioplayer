@@ -599,6 +599,7 @@ var buzz = {
             }
 
             this.sound = document.createElement( 'audio' );
+            this.sound.mozAudioChannelType = 'content';
 
             if ( src instanceof Array ) {
                 for( var j in src ) {
