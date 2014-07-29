@@ -13,15 +13,15 @@
         }
     },
     "icons": {
-        "30":           "/static/img/icons/30.png",
-        "60":           "/static/img/icons/60.png",
-        "90":           "/static/img/icons/90.png",
-        "120":          "/static/img/icons/120.png",
-        "240":          "/static/img/icons/240.png",
-        "32":           "/static/img/icons/32.png",
-        "64":           "/static/img/icons/64.png",
-        "128":          "/static/img/icons/128.png",
-        "256":          "/static/img/icons/256.png"
+        "30":           "/icons/30.png",
+        "60":           "/icons/60.png",
+        "90":           "/icons/90.png",
+        "120":          "/icons/120.png",
+        "240":          "/icons/240.png",
+        "32":           "/icons/32.png",
+        "64":           "/icons/64.png",
+        "128":          "/icons/128.png",
+        "256":          "/icons/256.png"
     },
     "orientation":      "portrait-primary",
     "developer": {

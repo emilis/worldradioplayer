@@ -31,7 +31,7 @@ icons
 
 
 icons:
-	$(MAKE) -C static/img/icons/ > /dev/null
+	$(MAKE) -C icons/ > /dev/null
 
 
 ### CSS: -----------------------------------------------------------------------
