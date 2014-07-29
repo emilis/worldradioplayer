@@ -1,4 +1,4 @@
-# <img src="https://raw.github.com/emilis/worldradioplayer/master/static/img/icons/60.png" align="right"> World Radio Player
+# <img src="https://raw.github.com/emilis/worldradioplayer/master/icons/60.png" align="right"> World Radio Player
 
 A player for Internet radio stations on [Firefox OS][].
 
