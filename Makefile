@@ -3,7 +3,7 @@
 
 ### Main -----------------------------------------------------------------------
 
-default: static data
+default: static icons data
 
 
 clean:
@@ -20,14 +20,13 @@ default \
 index.html \
 manifest.webapp \
 Makefile
-	zip -r application.zip static/ index.html manifest.webapp
+	zip -r application.zip static/ icons/ index.html manifest.webapp
 
 
 ### Static files: --------------------------------------------------------------
 
 static: \
-static/style.css \
-icons
+static/style.css
 
 
 icons:
