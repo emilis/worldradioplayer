@@ -1,0 +1,26 @@
+--- requirements --------------------------------------------------------------
+
+buzz/dist/buzz
+
+--- exports -------------------------------------------------------------------
+
+isStreamSupported
+
+--- livescript ----------------------------------------------------------------
+
+types-supported =
+    'ogg':              buzz.is-OGG-supported!
+    'application/ogg':  buzz.is-OGG-supported!
+    'wav':              buzz.is-WAV-supported!
+    'mp3':              buzz.is-MP3-supported!
+    'audio/mpeg':       buzz.is-MP3-supported!
+    'aac':              buzz.is-AAC-supported!
+    'audio/aac':        buzz.is-AAC-supported!
+    'audio/aacp':       buzz.is-AAC-supported!
+
+### Functions -----------------------------------------------------------------
+
+function is-stream-supported stream
+
+    !! types-supported[ stream.type ]
+

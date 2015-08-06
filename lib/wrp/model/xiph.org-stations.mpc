@@ -1,0 +1,44 @@
+--- requirements --------------------------------------------------------------
+
+Streams:                ./streams
+
+xhrPromisified:         emilis-stark-utils/xhr-promisified
+
+--- exports -------------------------------------------------------------------
+
+list
+
+--- yaml ----------------------------------------------------------------------
+
+XIPH_URL:               /static/data/dir.xiph.org.yp.json  
+
+--- livescript ----------------------------------------------------------------
+
+function list
+
+    xhr-promisified.GET XIPH_URL
+
+        .then ( streams )->
+
+            streams.directory.entry.reduce streams-to-stations, {}
+
+
+function streams-to-stations stations, stream
+
+    if Streams.is-stream-supported type: stream.server_type
+
+        id =                stream.server_name
+
+        if !stations[id]
+            stations[id] =
+                name:       stream.server_name
+                genre:      stream.genre
+                streams:    []
+
+        stations[id].streams.push {
+            type:           stream.server_type
+            bitrate:        parse-int stream.bitrate, 10 or 0
+            url:            stream.listen_url
+        }
+
+    stations

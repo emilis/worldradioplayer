@@ -1,0 +1,20 @@
+--- exports -------------------------------------------------------------------
+
+read
+getCached
+
+--- yaml ----------------------------------------------------------------------
+
+stations:               {}
+
+--- livescript ----------------------------------------------------------------
+
+function read name
+
+    stations[name]
+
+
+function get-cached station
+
+    name =              station.name
+    stations[name]=     stations[name] || station

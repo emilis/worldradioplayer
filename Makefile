@@ -1,64 +1,80 @@
-.PHONY:	default clean static zip data build-tools xml2json
+### Variables -----------------------------------------------------------------
+
+BOWER=					./node_modules/.bin/bower
+STARK=					./node_modules/.bin/stark
+XML2JSON=				./node_modules/.bin/xml2json
+
+### Tasks ---------------------------------------------------------------------
+
+.PHONY: default
+default: data icons build
 
 
-### Main -----------------------------------------------------------------------
+.PHONY:  build
+build:\
 
-default: static icons data
+	${STARK} build
+	cp -r icons build/icons
 
 
-clean:
+.PHONY:	zip
+zip:	application.zip
+
+
+
+.PHONY:  run
+run:\
+
+	${STARK} watch-server
+
+
+.PHONY:  setup
+setup:\
+
+	npm install
+	${BOWER} install
+
+
+.PHONY:  clean
+clean:\
+
 	rm application.zip
 
 
-### Application.zip: -----------------------------------------------------------
+### Targets -------------------------------------------------------------------
 
-zip: application.zip
+application.zip:\
+	build\
 
-
-application.zip: \
-default \
-index.html \
-manifest.webapp \
-Makefile
-	zip -r application.zip static/ icons/ index.html manifest.webapp
+	cd build && zip -r ../application.zip index.html static/ icons/ manifest.webapp
 
 
-### Static files: --------------------------------------------------------------
-
-static: \
-static/style.css
-
-
+.PHONY:  icons
 icons:
+
 	$(MAKE) -C icons/ > /dev/null
 
 
-### CSS: -----------------------------------------------------------------------
+### Data ----------------------------------------------------------------------
 
-static/style.css: \
-static/css/*.less
-	lessc -x static/css/style.less $@
+.PHONY:  data
+data:\
+	static/data\
+	static/data/dir.xiph.org.yp.json\
 
-### Data: ----------------------------------------------------------------------
 
-data: \
-static/data \
-static/data/dir.xiph.org.yp.json
+static/data:\
 
-static/data:
 	mkdir -p static/data
 
-static/data/dir.xiph.org.yp.json: \
-static/data/dir.xiph.org.yp.xml
-	cat "$<" | node xml2json > "$@"
 
-static/data/dir.xiph.org.yp.xml:
+static/data/dir.xiph.org.yp.json:\
+	static/data/dir.xiph.org.yp.xml\
+
+	cat "$<" | ${XML2JSON} > "$@"
+
+
+static/data/dir.xiph.org.yp.xml:\
+
 	curl 'http://dir.xiph.org/yp.xml' > "$@"
 
-### Prerequisites: -------------------------------------------------------------
-
-build-tools: \
-xml2json
-
-xml2json:
-	npm install -g 'git://github.com/buglabs/node-xml2json.git'

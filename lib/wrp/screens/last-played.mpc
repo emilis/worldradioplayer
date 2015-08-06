@@ -1,0 +1,84 @@
+--- requirements ---------------------------------------------------------------
+
+Db:                     ../model/db
+Debug:                  emilis-stark-utils/debug
+Model:                  ../model/last-played
+StationList:            ../views/station-list
+UpdateFilter:           emilis-stark-utils/react/update-filter
+
+--- exports -------------------------------------------------------------------
+
+icon
+
+--- yaml ----------------------------------------------------------------------
+
+icon:                   favourite
+initialState:
+    err:                false
+    message:            Loading station list...
+    stations:           []
+    updating:           false
+
+--- jade-react ----------------------------------------------------------------
+
+div( class= CLASSNAME )
+    StationList(
+        activeStation=  activeStation
+        isPlaying=      isPlaying
+        playStation=    playStation
+        err=            this.state.err
+        message=        this.state.message
+        stations=       this.state.stations
+        updating=       this.state.updating
+    )
+
+--- livescript ----------------------------------------------------------------
+
+debug =                 Debug.get-debugger PATH
+
+previous-length =       0
+
+_react-class <<< Update-filter <<< {
+    reload-stations
+}
+
+
+!function component-did-mount
+    debug 'component-did-mount'
+
+    @bound-reload =     @~reload-stations
+    Model.on.changed @bound-reload
+    @reload-stations!
+
+
+!function component-will-unmount
+
+    Model.off.changed @bound-reload
+
+
+!function reload-stations
+    debug 'reload-stations'
+
+    Model.list!
+
+        .then ( results= [] )~>
+
+            if  previous-length != results.length
+                previous-length := results.length
+
+                @set-state do
+                    stations:   results
+                    message:    if results.length then '' else 'No stations in list.'
+
+        .catch ( err )~>
+
+            @set-state do
+                updating:   false
+                stations:   []
+                err:        err
+                message:    false
+
+        .catch ( err )->
+
+            debug 'reload-stations', 'ERROR', err
+

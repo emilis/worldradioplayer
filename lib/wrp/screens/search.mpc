@@ -1,0 +1,168 @@
+--- requirements --------------------------------------------------------------
+
+lodash/lodash
+../theme
+
+Debug:                  emilis-stark-utils/debug
+UpdateFilter:           emilis-stark-utils/react/update-filter
+
+Genres:                 ../views/genres
+SearchEngine:           ../model/search-engine
+StationCache:           ../model/station-cache
+StationList:            ../views/station-list
+
+--- exports -------------------------------------------------------------------
+
+icon
+
+--- yaml ----------------------------------------------------------------------
+
+icon:                   search
+
+SEARCH_THROTTLE:        500
+HINT:                   Select a genre or enter a search phrase to start!
+NO_RESULTS:             No stations found matching your criteria. Please change your search parameters and try again.
+
+initialState:
+    inputValue:         ""
+    genreValue:         ""
+    err:                false
+    message:            Select a genre or enter a search phrase to start!
+    stations:           []
+    updating:           false
+
+--- jade-react ----------------------------------------------------------------
+
+div( class= CLASSNAME )
+
+    form.form(
+        onSubmit=       this.onSubmit
+    )
+
+        label
+            Genres(
+                onChange=       this.onChangeGenre
+            )
+
+        label
+            input.query(
+                placeholder=    "Type to search"
+                onChange=       this.onChangeInput
+            )
+
+    .results
+        StationList(
+            activeStation=  activeStation
+            isPlaying=      isPlaying
+            playStation=    playStation
+            err=            this.state.err
+            message=        this.state.message
+            stations=       this.state.stations
+            updating=       this.state.updating
+        )
+
+--- livescript ----------------------------------------------------------------
+
+debug =                 Debug.get-debugger PATH
+
+_react-class <<< Update-filter <<< {
+    on-submit
+    on-change-genre
+    on-change-input
+    search
+}
+
+!function component-did-mount
+
+    @throttled-search = _.debounce do
+        @~search
+        SEARCH_THROTTLE
+        leading:    false
+        trailing:   true
+
+
+!function on-submit evt
+
+    evt.prevent-default!
+    @throttled-search
+
+
+!function on-change-genre evt
+    debug 'on-change-genre', evt
+
+    @set-state do
+        genre-value:    evt.target.value
+        @throttled-search
+
+
+!function on-change-input evt
+
+    @set-state do
+        input-value:    evt.target.value
+        @throttled-search
+
+
+!function search
+
+    query =             @state.input-value
+    genre-name =        @state.genre-value
+
+    debug 'search', query, genre-name
+
+    if !query && !genre-name
+
+        @set-state do
+            err:        false
+            message:    initial-state.message
+            stations:   []
+            updating:   false
+    else
+
+        @set-state updating: true
+
+        Search-engine.search query, genre-name
+
+            .then ( results )->
+
+                results && results.slice( 0, 20 ) || []
+
+            .map Station-cache.get-cached
+
+            .then ( results )~>
+
+                results =       results || []
+                empty =         !results.length
+
+                @set-state do
+                    err:        false
+                    message:    empty && NO_RESULTS || ''
+                    stations:   results
+                    updating:   false
+
+            .catch ( err )~>
+
+                @set-state do
+                    err:        err
+                    message:    false
+                    stations:   []
+                    updating:   false
+
+--- stylus --------------------------------------------------------------------
+
+{SELECTOR}
+
+    > form
+
+        padding                 1rem
+        border-bottom           0.1rem solid $border
+
+        label 
+
+            display             block
+        
+            > input,
+            > select 
+
+                box-sizing      border-box
+                -moz-box-sizing border-box
+                width           100%

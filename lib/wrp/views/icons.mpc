@@ -1,0 +1,16 @@
+--- yaml ----------------------------------------------------------------------
+
+types:
+    play:           icon-play
+    pause:          icon-pause
+    stop:           icon-stop
+    favourite:      icon-star
+    search:         icon-search
+    add:            icon-plus
+    settings:       icon-cogs
+
+--- jade-react ----------------------------------------------------------------
+
+i(
+    class=  types[type]
+)

@@ -1,0 +1,88 @@
+--- requirements --------------------------------------------------------------
+
+../theme
+
+Icons:                  ./icons
+
+--- jade-react ----------------------------------------------------------------
+
+li(
+    class=      CLASSNAME
+    class=      isActive && "active"
+)
+    .buttons
+        button.play(
+            onClick=    playStation( station )
+        )
+            Icons(
+                type=   isPlaying ? "pause" : "play"
+            )
+    .info
+        .name=          station.name || ""
+        .description=   station.description || ""
+        .genre=         station.genre || ""
+
+--- livescript ----------------------------------------------------------------
+
+function should-component-update next-props, next-state
+
+    next-props.station != @props.station
+    || next-props.is-active != @props.is-active
+    || next-props.is-playing != @props.is-playing
+
+--- stylus --------------------------------------------------------------------
+
+{SELECTOR}
+
+    padding         1rem
+    min-height      4rem
+    overflow        hidden
+    border-bottom   0.1rem solid $border
+
+    &.active 
+
+        background-color    $darkblue
+
+    > .buttons 
+
+        float               right
+        text-align          right
+
+        > .play
+
+            width           4rem
+    
+    > .info 
+
+        margin              0 10rem 0 0
+
+        > .name 
+
+            display         block
+            font-weight     bold
+        
+        > .description 
+
+            font-weight     normal
+            font-size       1.2rem
+            color           $gray
+        
+        > .genre 
+
+            font-weight     normal
+            font-size       1.2rem
+            color           $gray
+
+    &.unsupported 
+
+        display             none
+    
+        > .buttons 
+
+            display         none
+        
+        > .info 
+
+            margin          0
+            font-style      italic
+            color           $charcoal

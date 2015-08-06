@@ -1,0 +1,139 @@
+--- requirements --------------------------------------------------------------
+
+lodash/lodash
+
+utils:                  ./utils
+
+--- exports -------------------------------------------------------------------
+
+connect
+
+--- livescript ----------------------------------------------------------------
+
+LS =                    window.local-storage
+
+function global-err msg
+
+    new Error PATH + ": " + msg
+
+function connect name
+
+    if !_.is-string name or _.is-empty name
+        throw global-err 'connect(): table name must be a non-empty string.'
+
+    name = '---' + name + '---'
+
+    return {
+        read
+        write
+        remove
+        list
+        list-ids
+        list-by-ids
+        count
+        clear
+        to-object
+    }
+
+
+    function err msg
+
+        global-err '[' + name + ']: ' + msg
+
+
+    function get-id id
+
+        name + id
+
+
+    function read id
+
+        if !id
+            err 'read() needs a non-empty id.'
+
+        id =            get-id id
+        record =        LS.get-item id
+
+        if record == undefined
+            throw err "Not found #id"
+        else
+            JSON.parse record
+
+
+    function write id, record
+
+        get-id id
+            LS.set-item .., JSON.stringify record
+
+
+    function remove id
+
+        id =            get-id id
+        exists =        LS.get-item id
+        LS.remove-item id
+        exists != undefined
+
+
+    function list filter, options
+
+        utils.filter-items do
+            get-keys!
+                .map LS~get-item
+                .map JSON.parse
+            filter, options
+
+
+    function list-ids
+
+        get-keys!map to-public-id
+
+
+    function list-by-ids ids
+
+        _ ids
+            .map read
+            .filter!
+            .value!
+
+
+    function count filter, options
+
+        if !filter or !options
+            get-keys!length
+        else
+            list filter, options
+                .length
+
+
+    function clear
+
+        get-keys!map ( k )->
+            LS.remove-item
+
+
+    function to-object
+
+        return get-keys!reduce do
+            ( obj, key )->
+
+                if key and key.replace
+                    obj[ key.replace name, '' ] = JSON.parse LS.get-item key
+                obj
+            {}
+
+
+    ### Private functions ------------------------------------------------------
+
+    function get-keys
+
+        Object.keys LS
+            .filter ( key )->
+                !key.index-of name
+
+
+    function to-public-id id
+
+        if id.index-of name
+            id
+        else
+            id.substr name.length

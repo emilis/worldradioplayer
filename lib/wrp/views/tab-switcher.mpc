@@ -1,0 +1,84 @@
+--- requirements --------------------------------------------------------------
+
+mozilla/gaia/tabs
+
+config
+../theme
+
+Icons:              ./icons
+UpdateFilter:       emilis-stark-utils/react/update-filter
+
+--- yaml ----------------------------------------------------------------------
+
+initialState:
+    selectedTab:    false
+
+--- jade-react ----------------------------------------------------------------
+
+- var childArray =  !children ? [] : children.length ? children : [children]
+
+ul.bottom(
+    class=          CLASSNAME
+    role=           "tablist"
+    data-items=     childArray.length
+)
+    each tab,index in childArray
+
+        - var icon =        tab.type.defaultProps.icon
+        - var is_disabled = tab.type.defaultProps.disabled;
+        - var is_selected = tab.key === ( this.state.selectedTab || selectedTab )
+
+        li(
+            key=            tab.key
+            role=           "tab"
+            aria-disabled=  is_disabled && "true"
+            aria-selected=  is_selected && "true"
+        )
+            a(
+                key=        tab.key
+                data-tab=   tab.key
+                onClick=    !is_disabled && this.switchTab
+            )
+                Icons( type= icon )
+            
+            .tabpanel( role= "tabpanel" )
+                =   tab
+
+--- livescript ----------------------------------------------------------------
+
+_react-class <<< Update-filter <<< {
+    switch-tab
+}
+
+
+!function component-will-receive-props new-props
+
+    if new-props.selected-tab != @props.selected-tab
+        @set-state selected-tab: new-props.selected-tab
+
+
+!function switch-tab evt
+
+    @set-state do
+        selected-tab:   evt.current-target.get-attribute 'data-tab'
+
+--- stylus --------------------------------------------------------------------
+
+{SELECTOR}
+
+    position       fixed
+    left           0
+    right          0
+    top            $playerHeight
+    bottom         0
+    height         auto
+
+    > li 
+        > a
+
+            cursor              pointer
+
+        > .tabpanel 
+
+            background-color    $charcoal
+

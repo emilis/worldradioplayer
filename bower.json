@@ -1,0 +1,24 @@
+{
+  "name": "worldradioplayer",
+  "version": "1.0.0",
+  "authors": [
+    "Emilis Dambauskas <emilis.d@gmail.com>"
+  ],
+  "description": "Internet radio player for Firefox OS",
+  "main": "index.mpc",
+  "license": "AGPL",
+  "homepage": "https://github.com/emilis/worldradioplayer",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bluebird": "~2.9.32",
+    "buzz": "~1.1.8",
+    "emilis-stark-utils": "*",
+    "eventEmitter": "~4.2.11"
+  }
+}

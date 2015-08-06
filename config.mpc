@@ -1,0 +1,21 @@
+--- exports -------------------------------------------------------------------
+
+DEBUG
+
+--- yaml ----------------------------------------------------------------------
+
+DEBUG:                  false
+
+--- compiler ------------------------------------------------------------------
+
+js:
+    nowrap:
+        -   /bower_components/bluebird/js/browser/bluebird
+        -   /bower_components/buzz/dist/buzz
+        -   /bower_components/eventEmitter/EventEmitter
+        -   /bower_components/lodash/lodash
+
+--- stylus --------------------------------------------------------------------
+
+$playerHeight =         10rem
+

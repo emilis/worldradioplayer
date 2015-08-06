@@ -1,0 +1,145 @@
+--- requirements --------------------------------------------------------------
+
+buzz/dist/buzz
+
+config
+BoundEvents:            emilis-stark-utils/bound-events
+Debug:                  emilis-stark-utils/debug
+Streams:                ./streams
+
+--- exports -------------------------------------------------------------------
+
+playStation
+play
+stop
+pause
+on:                     events.on
+off:                    events.off
+
+--- yaml ----------------------------------------------------------------------
+
+ACTIONS:
+    -   error
+    -   isPlaying
+SOUND_OPT:
+    autoplay:           false
+    loop:               false
+SOUND_EVENTS:
+    -   abort           # stopped / error
+    -   canplay         # buffering
+    -   canplaythrough  # buffering
+    -   dataunavailable # buffering / network-error
+    -   durationchange  # -- no change --
+    -   emptied         # stopped / ???
+    -   empty           # stopped / ???
+    -   ended           # stopped / ???
+    -   error           # error
+    -   loadeddata      # buffering?
+    -   loadedmetadata  # buffering?
+    -   loadstart       # buffering?
+    -   pause           # paused
+    -   play            # buffering
+    -   playing         # playing
+    -   ratechange      # buffering
+    -   seeked          # buffering
+    -   seeking         # buffering
+    -   suspend         # paused?
+    -   volumechange    # –– no change ––
+    -   waiting         # buffering
+
+state:
+    sound:              false
+    isPlaying:          false
+
+--- livescript ----------------------------------------------------------------
+
+debug =                 Debug.get-debugger PATH
+events =                Bound-events ACTIONS
+
+### Functions -----------------------------------------------------------------
+
+!function play-station station
+    debug 'play-station', station
+
+    if  state.sound
+        stop!
+
+    if  state.sound =       get-sound station
+        that.load!play!
+        state.is-playing =  true
+    else
+        state.is-playing =  false
+        debug 'play-station/no-sound', station, state.sound
+
+    events.emit.is-playing state.is-playing
+
+
+!function play
+    debug 'play', state.sound.sound.currentSrc, state.sound.sound
+
+    if  state.sound
+        that.load!play!
+        state.is-playing =  true
+        events.emit.is-playing state.is-playing
+
+
+!function stop
+    debug 'stop', state.sound.sound.currentSrc, state.sound.sound
+
+    if  state.sound
+        pause!
+        that.unbind 'ended error'
+        that.sound.src =   ''
+        delete! state.sound
+
+
+!function pause
+    debug 'pause', state.sound.sound.currentSrc, state.sound.sound
+
+    if  state.sound
+        that.pause!
+    state.is-playing =      false
+    events.emit.is-playing state.is-playing
+
+
+### Private functions ---------------------------------------------------------
+
+function get-sound station
+    debug 'get-sound', station
+
+    streams =   station.streams.filter Streams.is-stream-supported
+
+    if  streams && streams.length
+
+        sound =     new buzz.sound streams[0].url, SOUND_OPT
+        sound.sound.moz-audio-channel-type =    'content'
+
+        # sound.bind 'durationchange', reload-sound
+        sound.bind 'ended', reload-sound.bind {}, sound
+        sound.bind 'error', events.emit.error
+
+        if config.DEBUG_SOUND
+            debug-sound sound
+        return sound
+    else
+        debug 'get-sound/no-streams', station
+        return null
+
+
+!function reload-sound sound
+    debug 'reload-sound', sound
+
+    sound.stop!load!play!
+
+
+!function debug-sound sound
+
+    SOUND_EVENTS.for-each ( name )!->
+
+        sound.bind name, ( e )!->
+
+            debug do
+                'sound-event', name
+                sound.get-error-code!
+                sound.get-state-code!
+                sound.get-network-state-code!

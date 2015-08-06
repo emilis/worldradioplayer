@@ -1,0 +1,64 @@
+--- requirements --------------------------------------------------------------
+
+lodash/lodash
+
+Db:                     ../model/db
+Debug:                  emilis-stark-utils/debug
+
+--- yaml ----------------------------------------------------------------------
+
+TOP_COUNT:              50
+initialState:
+    genres:             []
+
+--- jade-react ----------------------------------------------------------------
+
+- var genres =  this.state.genres;
+
+select(
+    class=      CLASSNAME
+    disabled=   !genres || !genres.length
+    onChange=   onChange
+)
+    option( value= "" ) All genres
+
+    if genres
+        each genre in genres
+            option(
+                key=    genre[0]
+                value=  genre[0]
+            )
+                b=  genre[0]
+                |   ( 
+                =   genre[1]
+                |   stations )
+
+--- livescript ----------------------------------------------------------------
+
+debug =                 Debug.get-debugger PATH
+
+!function component-did-mount
+
+    Db.genres.to-object!
+
+        .then ( genres )~>
+            debug 'mount', genres
+
+            @set-state do
+                genres: _ genres
+                    .map get-score-count
+                    .sort-by 1
+                    .value!
+                    .reverse!
+                    .slice 0, TOP_COUNT
+
+        .catch debug
+
+
+function get-score-count scores, name
+
+    if !scores
+        [ name, 0 ]
+    else
+        [ name, Object.keys( scores ).length ]
+

@@ -1,0 +1,159 @@
+--- requirements --------------------------------------------------------------
+
+lodash/lodash
+
+wrp/theme
+layout:                 stark/components/react-layout
+
+Debug:                  emilis-stark-utils/debug
+LastPlayedModel:        wrp/model/last-played
+SoundPlayer:            wrp/model/sound-player
+UpdateFilter:           emilis-stark-utils/react/update-filter
+
+AppCover:               wrp/views/app-cover
+Player:                 wrp/views/player
+TabSwitcher:            wrp/views/tab-switcher
+
+LastPlayed:             wrp/screens/last-played
+Search:                 wrp/screens/search
+AddStation:             wrp/screens/add-station
+Settings:               wrp/screens/settings
+
+--- yaml ----------------------------------------------------------------------
+
+title:                  World Radio Player
+
+metaTags:
+    -
+        name:           viewport
+        content:        width=320
+
+stylesheets:
+    - /static/fonts/awesome/font-awesome.css
+
+initialState:
+    loading:            true
+    selectedTab:        last-played
+    activeStation:      {}
+    isPlaying:          false
+    soundError:         false
+
+--- jade-react ----------------------------------------------------------------
+
+div( role= "app" )
+
+    AppCover(
+        show=           this.state.loading
+    )
+
+    Player(
+        station=        this.state.activeStation
+        isPlaying=      this.state.isPlaying
+        soundError=     this.state.soundError
+        togglePlay=     this.togglePlay
+    )
+
+    TabSwitcher(
+        selectedTab=        this.state.selectedTab
+    )
+        LastPlayed(
+            key=            "last-played"
+            activeStation=  this.state.activeStation
+            isPlaying=      this.state.isPlaying
+            playStation=    this.toggleStation
+        )
+        Search(
+            key=            "search"
+            activeStation=  this.state.activeStation
+            isPlaying=      this.state.isPlaying
+            playStation=    this.toggleStation
+        )
+        AddStation(
+            key=            "add-station"
+        )
+        Settings(
+            key=            "settings"
+        )
+
+--- livescript ----------------------------------------------------------------
+
+debug =                 Debug.get-debugger PATH
+
+_react-class <<< Update-filter <<< {
+    on-sound-error
+    on-is-playing
+    toggle-play
+    toggle-station
+    play-station
+}
+
+### Init ----------------------------------------------------------------------
+
+!function component-did-mount
+    debug 'component-did-mount'
+
+    Sound-player.on.error @~on-sound-error
+    Sound-player.on.is-playing @~on-is-playing
+
+    Last-played-model.list!
+
+        .then ( results )~>
+            debug 'component-did-mount/last-played', results
+
+            if !results or !results.length
+                @set-state selected-tab: 'search'
+            else
+                @play-station results[0]
+
+        .catch ~>
+
+            @set-state selected-tab: 'search'
+
+        .then ~>
+
+            @set-state loading: false
+
+### Functions -----------------------------------------------------------------
+
+!function on-sound-error
+    debug 'on-sound-error', &
+
+    @set-state do
+        is-playing:     false
+        sound-error:    true
+
+!function on-is-playing is-playing
+    debug 'on-is-playing', is-playing
+
+    @set-state { is-playing }
+
+
+!function toggle-play
+    debug 'toggle-play'
+
+    if  @state.is-playing
+        Sound-player.pause!
+    else
+        Sound-player.play!
+
+
+!function toggle-station station
+    debug 'toggle-station', station == @state.active-station, station
+
+    if  station == @state.active-station
+        @toggle-play!
+    else
+        @play-station station
+
+
+!function play-station station
+    debug 'play-station', station
+
+    @set-state do
+        active-station:     station
+        is-playing:         false
+        sound-error:        false
+        !->
+            Sound-player.play-station station
+            Last-played-model.play station
+

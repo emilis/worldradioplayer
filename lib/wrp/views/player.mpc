@@ -1,0 +1,68 @@
+--- requirements --------------------------------------------------------------
+
+../theme
+
+Icons:                  ./icons
+UpdateFilter:           emilis-stark-utils/react/update-filter
+
+--- jade-react ----------------------------------------------------------------
+
+div( class= CLASSNAME )
+
+    p.info( class=  soundError && "error" )
+        span.state
+            if soundError
+                | Error!
+            else if station && isPlaying
+                | Playing:
+            else if station
+                | Paused: 
+            else
+                | Stopped.
+        | 
+        span.song-name= station && station.name || ""
+
+    p.control
+        button.play(
+            class=      station ? "" : "disabled"
+            onClick=    togglePlay
+        )
+            Icons(
+                type=   ( station && isPlaying ) ? "pause" : "play"
+            )
+
+--- livescript ----------------------------------------------------------------
+
+_react-class <<< Update-filter
+
+--- stylus --------------------------------------------------------------------
+
+{SELECTOR}
+
+    position            fixed
+    left                0
+    right               0
+    top                 0
+    height              $playerHeight
+    padding             0 1rem
+    background-color    $black
+
+    > p
+
+        line-height     2rem
+
+    .info
+
+        margin          1rem 0 0
+        height          4rem
+        overflow-y      hidden
+
+    .control
+
+        margin          0
+        text-align      center
+
+        > .play
+
+            padding     0.8rem 2.9rem
+

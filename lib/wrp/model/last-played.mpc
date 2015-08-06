@@ -1,0 +1,58 @@
+--- requirements --------------------------------------------------------------
+
+lodash/lodash
+
+BoundEvents:            emilis-stark-utils/bound-events
+
+Db:                     ./db
+StationCache:           ./station-cache
+
+--- yaml ----------------------------------------------------------------------
+
+ACTIONS:
+    - changed
+
+--- exports -------------------------------------------------------------------
+
+list
+play
+on:                     events.on
+off:                    events.off
+
+--- livescript ----------------------------------------------------------------
+
+events =                Bound-events ACTIONS
+
+function list filter, options
+
+    Db.last.list filter, options
+
+        .then ( results )->
+
+            _.sort-by( results, 'last_time' ).reverse!
+
+        .map ( last-record )->
+
+            Db.stations.read last-record._id
+
+        .map Station-cache.get-cached
+
+
+function play station
+
+    _id =               station.name
+
+    Db.last.read _id
+
+        .then ( record )->
+
+            record =            record || {}
+                .._id =         _id
+                ..last_time =   +new Date
+                ..times =       ..times || 0
+                ..times +=      1
+
+            Db.last.write _id, record
+
+                .tap events.emit.changed
+

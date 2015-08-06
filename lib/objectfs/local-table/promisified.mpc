@@ -1,0 +1,18 @@
+--- requirements --------------------------------------------------------------
+
+bluebird/js/browser/bluebird
+
+localTable:             ../local-table
+
+--- exports -------------------------------------------------------------------
+
+connect
+
+--- livescript ----------------------------------------------------------------
+
+function connect name
+
+    {}
+        for k, v of local-table.connect name
+            ..[k] =     Promise.method v
+

@@ -1,0 +1,60 @@
+--- requirements ---------------------------------------------------------------
+
+lodash/lodash
+
+--- exports --------------------------------------------------------------------
+
+filterItems
+itemFilter
+applyOptions
+
+--- livescript ----------------------------------------------------------------
+
+function filter-items items, filter, options={}
+
+    apply-options do
+        if filter
+            items.filter item-filter filter
+        else
+            items
+        options
+
+
+function item-filter filters
+    ( item )->
+
+        return
+            if !filters
+                true
+            else if !item
+                false
+            else if filters instanceof Function
+                filters item
+            else
+                _.reduce filters, check-fields, true
+
+        function check-fields result, filter, key
+
+            if !result
+                result
+            else if filter instanceof RegExp
+                filter.exec item[key]
+            else if filter instanceof Function
+                filter item[key], key, item
+            else if filter instanceof Array
+                -1 != filter.index-of item[key]
+            else
+                filter == item[key]
+
+
+function apply-options results, options
+
+    if !options || !results || !results.length
+        results
+    else
+        if options.offset
+            results =   results.slice options.offset
+        if options.limit
+            results =   results.slice 0, options.limit
+        results
+

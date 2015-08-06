@@ -1,0 +1,63 @@
+--- requirements --------------------------------------------------------------
+
+../theme
+Station:                ./station
+UpdateFilter:           emilis-stark-utils/react/update-filter
+
+--- yaml ----------------------------------------------------------------------
+
+err:                    false
+message:                false
+stations:               []
+
+--- jade-react ----------------------------------------------------------------
+
+ul(
+    class=  CLASSNAME
+    class=  updating && "loading"
+)
+
+    if err
+        li.error
+            | Error loading station list:
+            = err && err.error || err
+    else if message
+        li.info=    message
+
+    else if !stations.length
+        li.warning  No stations in list.
+
+    else
+        each item in stations
+            - var isActive =    item === activeStation
+
+            Station(
+                key=            item.name
+                station=        item
+                isActive=       isActive
+                isPlaying=      isActive && isPlaying
+                playStation=    playStation
+            )
+
+--- livescript ----------------------------------------------------------------
+
+_react-class <<< Update-filter
+
+--- stylus --------------------------------------------------------------------
+
+{SELECTOR}
+
+    $nolist()
+    padding             0.3rem 0 0
+
+    > li 
+        padding         1rem
+        min-height      4rem
+        overflow        hidden
+        border-bottom   0.1rem solid $border
+    
+    > .error,
+    > .warning,
+    > .info
+
+        text-align      center

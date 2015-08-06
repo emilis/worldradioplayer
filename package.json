@@ -1,0 +1,30 @@
+{
+  "private": true,
+  "name": "world-radio-player",
+  "version": "1.0.0",
+  "description": "Internet radio station player.",
+  "main": "index.mpc",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emilis/worldradioplayer"
+  },
+  "keywords": [
+    "internet",
+    "radio",
+    "icecast"
+  ],
+  "author": "Emilis Dambauskas <emilis.d@gmail.com>",
+  "license": "AGPL",
+  "bugs": {
+    "url": "https://github.com/emilis/worldradioplayer/issues"
+  },
+  "homepage": "https://github.com/emilis/worldradioplayer",
+  "dependencies": {
+    "bower": "^1.4.1",
+    "stark": "^0.20.3",
+    "xml2json": "^0.7.1"
+  }
+}

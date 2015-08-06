@@ -1,0 +1,120 @@
+--- requirements --------------------------------------------------------------
+
+lodash/lodash
+
+Debug:                  emilis-stark-utils/debug
+localTable:             objectfs/local-table
+promisifiedTable:       objectfs/local-table/promisified
+tableAfterPromise:      objectfs/local-table/after-promise
+
+XiphOrgStations:        ./xiph.org-stations
+
+--- exports -------------------------------------------------------------------
+
+settings:               db.settings
+last:                   db.last
+stations:               db.stations
+genres:                 db.genres
+words:                  db.words
+
+--- yaml ----------------------------------------------------------------------
+
+IMPORTED:               imported
+IMPORT_DELAY:           5000
+
+--- livescript ----------------------------------------------------------------
+
+open-local-table =      promisified-table.connect
+db =                    {}
+debug =                 Debug.get-debugger PATH
+settings =              local-table.connect 'settings'
+
+db.settings =           promisified-table.connect 'settings'
+
+if settings.read IMPORTED
+    db.last =           promisified-table.connect 'last-played'
+    db.stations =       promisified-table.connect 'stations'
+    db.genres =         promisified-table.connect 'genres'
+    db.words =          promisified-table.connect 'words'
+else
+    import-promise =    import-data!then ->
+        settings.write IMPORTED, true
+        debug 'import FINISHED', +new Date
+
+    db.last =           table-after-promise.connect import-promise, 'last-played'
+    db.stations =       table-after-promise.connect import-promise, 'stations'
+    db.genres =         table-after-promise.connect import-promise, 'genres'
+    db.words =          table-after-promise.connect import-promise, 'words'
+
+### Import --------------------------------------------------------------------
+
+function import-data
+    debug 'import-data', +new Date
+
+    local-storage.clear!
+
+    station-table =     local-table.connect 'stations'
+    genre-table =       local-table.connect 'genres'
+    word-table =        local-table.connect 'words'
+
+    Xiph-org-stations.list!then ( stations )->
+
+        debug 'import-data/stations', stations
+
+        for id, station of stations
+            station-table.write id, station
+
+        for key, value of extract-genres stations
+            genre-table.write key, value
+
+        for key, value of extract-words stations
+            word-table.write key, value
+
+        stations
+
+function extract-genres stations
+
+    genres =            {}
+    for id, station of stations
+        genre =         trim station.genre
+        if genre
+            for name, score of get-word-scores genre
+                name =  trim name
+                if name
+                    genres[name] = genres[name] || {}
+                        ..[station.name] = score
+    genres
+
+function extract-words stations
+
+    words =             {}
+    for id, station of stations
+        sname =         trim station.name
+        if sname
+            for name, score of get-word-scores sname
+                name =  trim name
+                if name
+                    words[name] =   words[name] || {}
+                        ..[station.name] = score
+    words
+
+function get-word-scores str
+
+    if !_.is-string str
+        return {}
+
+    len =           str.length
+
+    return str.to-lower-case!
+        .split /[^a-z0-9]+/g
+        .reduce add-word, {}
+
+    function add-word scores, word
+
+        scores
+            ..[word] =  (( len - str.index-of( word )) + 0.5 * word.length ) / len
+
+function trim val
+
+    val && val.trim && val.trim! or ''
+

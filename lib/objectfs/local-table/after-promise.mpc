@@ -1,0 +1,21 @@
+--- requirements --------------------------------------------------------------
+
+localTable:             ../local-table
+
+--- exports -------------------------------------------------------------------
+
+connect
+
+--- livescript ----------------------------------------------------------------
+
+function connect promise, name
+
+    {}
+        for k, fn of local-table.connect name
+            ..[k] =     wrap-fn fn, promise
+
+function wrap-fn fn, promise
+    ->
+        args =          &
+        promise.then ->
+            fn.apply @, args

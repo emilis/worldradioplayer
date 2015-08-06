@@ -1,0 +1,6 @@
+--- requirements ---------------------------------------------------------------
+
+./theme/variables
+./theme/mixins
+./theme/base
+mozilla/gaia/responsive

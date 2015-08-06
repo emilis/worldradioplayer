@@ -10,12 +10,12 @@ Install it from [![Firefox Marketplace][marketplace-logo]][marketplace-link]
 
 Checkout this repository and install/use via the [Firefox OS Simulator][simulator].
 
-You will need [Node.js][node] and a version of [Make][make] to build this app. Also lessc, curl and zip on the command line.
+You will need [Node.js][node] and a version of [Make][make] to build this app. Also curl and zip on the command line.
 
 To start developing, run:
 ```bash
-$ make build-tools
-$ make
+$ make setup
+$ make run
 ```
 
 To create an `application.zip` file:
@@ -51,7 +51,7 @@ $ make zip
 ### License
 
     World Radio Player
-    Copyright (C) 2013 Emilis Dambauskas, emilis.d@gmail.com
+    Copyright (C) 2013–2015 Emilis Dambauskas, emilis.d@gmail.com
 
     World Radio Player is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by

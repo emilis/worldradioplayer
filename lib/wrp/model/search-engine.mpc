@@ -1,0 +1,137 @@
+--- requirements --------------------------------------------------------------
+
+bluebird/js/browser/bluebird
+lodash/lodash
+
+Db:                     ./db
+Debug:                  emilis-stark-utils/debug
+
+--- exports -------------------------------------------------------------------
+
+search
+tokenize
+filterWords
+getKeywords
+
+--- livescript ----------------------------------------------------------------
+
+L =                 _
+debug =             Debug.get-debugger PATH
+
+genres =            Db.genres
+words =             Db.words
+stations =          Db.stations
+
+### Functions -----------------------------------------------------------------
+
+function search query, genre-name
+
+    Promise.all [
+            genres.read genre-name
+                .then do
+                    -> then &.0 || {}
+                    -> then {}
+            get-keywords query, genre-name
+            ]
+        .spread get-ids
+        .then stations.list-by-ids
+
+
+function get-ids genre, keywords
+    debug 'get-ids', genre, keywords
+
+    no-genre =          L.is-empty genre
+    kwids =             kw-ids keywords
+    no-words =          L.is-empty kwids
+    debug 'search/get-ids', no-genre, genre, no-words, kwids
+
+    if no-genre && no-words
+        return []
+    else if no-words
+        return L genre
+            .pairs!
+            .sort-by 1
+            .pluck 0
+            .value!
+            .reverse!
+    else if no-genre
+        return L kwids
+            .sort-by count-score
+            .value!
+            .reverse!
+    else
+        ids =   L.intersection L.keys( genre ), kwids
+        debug 'get-ids/both', ids
+        return L ids
+            .sort-by count-score
+            .value!
+            .reverse!
+
+    function count-score id
+        0 +
+            1.0 * ( keywords.words[id] || 0 )+
+            0.4 * ( keywords.mwords[id] || 0 )+
+            0.2 * ( keywords.genres[id] || 0 )+
+            0.1 * ( keywords.mgenres[id] || 0 )+
+            0
+
+    function kw-ids keywords
+
+        L keywords
+            .values!
+            .map Object.keys
+            .flatten!
+            .union!
+            .value!
+
+function get-keywords query, genre-name
+
+    qwords =    tokenize query || genre-name
+    debug 'get-keywords', query, genre-name, qwords
+
+    Promise.all [
+            words.list-by-ids qwords
+            genres.list-by-ids qwords
+            words.list-ids!
+                .then filter-words.bind @, qwords
+                .then words.list-by-ids
+            genres.list-ids!
+                .then filter-words.bind @, qwords
+                .then genres.list-by-ids
+            ]
+
+        .map arr-to-object
+
+        .spread ( words, genres, mwords, mgenres )->
+
+            { words, genres, mwords, mgenres }
+                # debug 'get-keywords/combine-results', JSON.stringify ..
+
+### Utilities -----------------------------------------------------------------
+
+function arr-to-object arr
+    if L.is-array arr
+        arr = L.filter( arr ).reverse!
+        if arr.length
+            return L.extend.apply L, arr
+
+    return {}
+
+function tokenize str
+
+    result = str.to-lower-case!split /[^a-z0-9]+/g
+    |> L.filter
+    debug 'tokenize', str, result
+    result
+
+function filter-words qwords, words
+
+    result = L.union.apply L, qwords.map( get-matching )
+    debug 'filter-words', qwords, words.length, result
+    return result
+
+    function get-matching qw
+        L words
+            .reject ( w )->
+                w.index-of qw
+            .value!
